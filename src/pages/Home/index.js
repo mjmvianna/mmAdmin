@@ -1,12 +1,10 @@
 // Melhorias:
-// -Procurar um componente que trabalhe melhor com exibição de matriz de dados
-// -Scroll: voltar na posição em que o cadastro estava
-// -Na volta de inclusão, alteração, exclusão manter a ordenação e o filtro selecionados (se houver)
+// -Na volta de inclusão, alteração, exclusão manter o filtro selecionados (se houver)
 // -Alterar o ícone do index.html
 
 import './home.css';
 
-import { useEffect, useLayoutEffect, useState, useContext, useRef } from 'react';
+import { useEffect, useState, useContext, useRef } from 'react';
 import { collection, query, getDocs } from 'firebase/firestore';
 
 import { db } from '../../services/firebaseConnection';
@@ -143,11 +141,23 @@ function Home() {
     }
   }, [filtro, tabPessoas, tabGrupos, tabCompanhias, tabOrgaos, tabCargos]);
   
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!exibeIncluir && !exibeAlterar && !exibeExcluir) {
       carregaAdministradores();
     }
   },[loadingTabelas, exibeIncluir, exibeAlterar, exibeExcluir]);
+  
+  useEffect(() => {
+    if (document.getElementById("containerDadosAdministradores")) {
+      const scrollVar = scrollPositionRef.current;
+      document.getElementById("containerDadosAdministradores").scrollTo(
+        { 
+          top: scrollVar,
+          behavior: "instant",
+        }
+      );
+    }
+  },[carregaAdministradores]);
   
   function fNomeAdministrador(uidPessoa) {
     const indPessoa = tabPessoas.findIndex((element) => element.uidPessoa === uidPessoa);
@@ -377,18 +387,6 @@ function Home() {
     setLoading(false);
   }
   
-  function scrollTabela() {
-    if (document.getElementById("containerDadosAdministradores")) {
-      const scrollVar = scrollPositionRef.current;
-      document.getElementById("containerDadosAdministradores").scrollTo(
-        { 
-          top: scrollVar,
-          behavior: "instant",
-        }
-      );
-    }
-  }
-
   function filtraTabela() {
     if (itemFiltro === '') {
       fOrdenaLista(tabAdministradores);
@@ -531,7 +529,10 @@ function Home() {
                           className='selOptionsAdministrador'
                           id='selOrdenAdministrador'
                           value={ordenacao}
-                          onChange={(e) => setOrdenacao(e.target.value)}
+                          onChange={(e) => {
+                            scrollPositionRef.current = 0;
+                            setOrdenacao(e.target.value)
+                          }}
                         >
                           <option key='ordAdmin'     value='administrador'>Administrador</option>
                           <option key='ordGrupo'     value='grupo'        >Grupo Econômico</option>
@@ -543,10 +544,20 @@ function Home() {
                         </select>
                         <div className='botOrdenAdministrador'>
                           <div className='botAscOrdenAdministrador'>
-                            <button onClick={() => setOrdenacaoAsc(true)}><SortAscButtonIcon/></button>
+                            <button onClick={() => {
+                                scrollPositionRef.current = 0;
+                                setOrdenacaoAsc(true)
+                              }}>
+                              <SortAscButtonIcon/>
+                            </button>
                           </div>
                           <div className='botAscOrdenAdministrador'>
-                            <button onClick={() => setOrdenacaoAsc(false)}><SortDescButtonIcon/></button>
+                            <button onClick={() => {
+                                scrollPositionRef.current = 0;
+                                setOrdenacaoAsc(false)
+                              }}>
+                              <SortDescButtonIcon/>
+                            </button>
                           </div>
                         </div>
                       </div>

@@ -1,6 +1,6 @@
 import './usuarios.css';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { collection, query, getDocs, getDoc, doc, deleteDoc, setDoc } from 'firebase/firestore';
 import { toast } from 'react-toastify';
@@ -19,6 +19,8 @@ function Usuarios() {
   const [exibeAlterar, setExibeAlterar] = useState(false);
   const [selectedUsuario, setSelectedUsuario] = useState(null);
   
+  const scrollPositionRef = useRef(0);
+  
   useEffect(() => {
     async function loadUsuarios() {
       await carregaUsuarios();
@@ -27,6 +29,18 @@ function Usuarios() {
     loadUsuarios();
     
   }, []);
+  
+  useEffect(() => {
+    if (document.getElementById("containerTabelaUsuarios")) {
+      const scrollVar = scrollPositionRef.current;
+      document.getElementById("containerTabelaUsuarios").scrollTo(
+        { 
+          top: scrollVar,
+          behavior: "instant",
+        }
+      );
+    }
+  }, [carregaUsuarios]);
   
   async function carregaUsuarios() {
     setLoading(true);
@@ -224,7 +238,7 @@ function Usuarios() {
               </div>
             </div>
           )}
-          <div className='containerTabelaUsuarios'>
+          <div className='containerTabelaUsuarios' id='containerTabelaUsuarios'>
             <table className='tabelaUsuarios'>
               <thead>
                 <tr>
@@ -275,6 +289,7 @@ function Usuarios() {
                         <button 
                           className='botaoAcaoUsuario'
                           onClick={() => {
+                            scrollPositionRef.current = document.getElementById("containerTabelaUsuarios").scrollTop;
                             setSelectedUsuario(item);
                             setExibeAlterar(true);
                           }}
@@ -284,6 +299,7 @@ function Usuarios() {
                         <button 
                           className='botaoAcaoUsuario'
                           onClick={() => {
+                            scrollPositionRef.current = document.getElementById("containerTabelaUsuarios").scrollTop;
                             setSelectedUsuario(item);
                             setExibeExcluir(true);
                           }}

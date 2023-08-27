@@ -1,6 +1,6 @@
 import './orgaos.css';
 
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext, useRef } from 'react';
 import { toast } from 'react-toastify';
 import { collection, query, getDocs, doc, getDoc, setDoc, deleteDoc, addDoc } from 'firebase/firestore';
 
@@ -22,6 +22,8 @@ function Orgaos() {
   const [exibeExcluir,  setExibeExcluir]  = useState(false);
   const [selectedOrgao, setSelectedOrgao] = useState(null);
   
+  const scrollPositionRef = useRef(0);
+  
   useEffect(() => {
     async function loadOrgaos() {
       await carregaOrgaos();
@@ -30,6 +32,18 @@ function Orgaos() {
     loadOrgaos();
     
   }, []);
+  
+  useEffect(() => {
+    if (document.getElementById("containerTabelaOrgaos")) {
+      const scrollVar = scrollPositionRef.current;
+      document.getElementById("containerTabelaOrgaos").scrollTo(
+        { 
+          top: scrollVar,
+          behavior: "instant",
+        }
+      );
+    }
+  }, [carregaOrgaos]);
   
   async function carregaOrgaos() {
     setLoading(true);
@@ -267,13 +281,14 @@ function Orgaos() {
                     <button 
                       className='botaoNovoOrgao'
                       onClick={() => {
+                        scrollPositionRef.current = document.getElementById("containerTabelaOrgaos").scrollTop;
                         setExibeIncluir(true);
                       }}
                     >
                       Novo Órgão
                     </button>
                   )}
-                  <div className='containerTabelaOrgaos'>
+                  <div className='containerTabelaOrgaos' id='containerTabelaOrgaos'>
                     <table className='tabelaOrgaos'>
                       <thead>
                         <tr>
@@ -313,6 +328,7 @@ function Orgaos() {
                                 <button 
                                     className='botaoAcaoOrgao'
                                     onClick={() => {
+                                      scrollPositionRef.current = document.getElementById("containerTabelaOrgaos").scrollTop;
                                       setSelectedOrgao(item);
                                       setExibeAlterar(true);
                                     }}
@@ -322,6 +338,7 @@ function Orgaos() {
                                   <button 
                                     className='botaoAcaoOrgao'
                                     onClick={() => {
+                                      scrollPositionRef.current = document.getElementById("containerTabelaOrgaos").scrollTop;
                                       setSelectedOrgao(item);
                                       setExibeExcluir(true);
                                     }}

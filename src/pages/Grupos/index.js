@@ -1,6 +1,6 @@
 import './grupos.css';
 
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext, useRef } from 'react';
 import { toast } from 'react-toastify';
 import { collection, query, getDocs, doc, getDoc, setDoc, deleteDoc, addDoc } from 'firebase/firestore';
 
@@ -23,6 +23,8 @@ function Grupos() {
   const [exibeExcluir,  setExibeExcluir]  = useState(false);
   const [selectedGrupo, setSelectedGrupo] = useState(null);
   
+  const scrollPositionRef = useRef(0);
+  
   useEffect(() => {
     async function loadGrupos() {
       await carregaGrupos();
@@ -31,6 +33,18 @@ function Grupos() {
     loadGrupos();
     
   }, []);
+  
+  useEffect(() => {
+    if (document.getElementById("containerTabelaGrupos")) {
+      const scrollVar = scrollPositionRef.current;
+      document.getElementById("containerTabelaGrupos").scrollTo(
+        { 
+          top: scrollVar,
+          behavior: "instant",
+        }
+      );
+    }
+  }, [carregaGrupos]);
   
   async function carregaGrupos() {
     setLoading(true);
@@ -242,12 +256,13 @@ function Grupos() {
                   {userMaster && (<button 
                     className='botaoNovoGrupo'
                     onClick={() => {
+                      scrollPositionRef.current = document.getElementById("containerTabelaGrupos").scrollTop;
                       setExibeIncluir(true);
                     }}
                   >
                     Novo Grupo Econômico
                   </button>)}
-                  <div className='containerTabelaGrupos'>
+                  <div className='containerTabelaGrupos' id='containerTabelaGrupos'>
                     <table className='tabelaGrupos'>
                       <thead>
                         <tr>
@@ -275,6 +290,7 @@ function Grupos() {
                               <button 
                                   className='botaoAcaoGrupo'
                                   onClick={() => {
+                                    scrollPositionRef.current = document.getElementById("containerTabelaGrupos").scrollTop;
                                     setSelectedGrupo(item);
                                     setExibeAlterar(true);
                                   }}
@@ -284,6 +300,7 @@ function Grupos() {
                                 <button 
                                   className='botaoAcaoGrupo'
                                   onClick={() => {
+                                    scrollPositionRef.current = document.getElementById("containerTabelaGrupos").scrollTop;
                                     setSelectedGrupo(item);
                                     setExibeExcluir(true);
                                   }}

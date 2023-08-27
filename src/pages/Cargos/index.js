@@ -1,6 +1,6 @@
 import './cargos.css';
 
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext, useRef } from 'react';
 import { toast } from 'react-toastify';
 import { collection, query, getDocs, doc, getDoc, setDoc, deleteDoc, addDoc } from 'firebase/firestore';
 
@@ -22,6 +22,8 @@ function Cargos() {
   const [exibeExcluir,  setExibeExcluir]  = useState(false);
   const [selectedCargo, setSelectedCargo] = useState(null);
   
+  const scrollPositionRef = useRef(0);
+  
   useEffect(() => {
     async function loadCargos() {
       await carregaCargos();
@@ -30,6 +32,18 @@ function Cargos() {
     loadCargos();
     
   }, []);
+  
+  useEffect(() => {
+    if (document.getElementById("containerTabelaCargos")) {
+      const scrollVar = scrollPositionRef.current;
+      document.getElementById("containerTabelaCargos").scrollTo(
+        { 
+          top: scrollVar,
+          behavior: "instant",
+        }
+      );
+    }
+  }, [carregaCargos]);
   
   async function carregaCargos() {
     setLoading(true);
@@ -240,13 +254,14 @@ function Cargos() {
                     <button 
                       className='botaoNovoCargo'
                       onClick={() => {
+                        scrollPositionRef.current = document.getElementById("containerTabelaCargos").scrollTop;
                         setExibeIncluir(true);
                       }}
                     >
                       Novo Cargo
                     </button>
                   )}
-                  <div className='containerTabelaCargos'>
+                  <div className='containerTabelaCargos' id='containerTabelaCargos'>
                     <table className='tabelaCargos'>
                       <thead>
                         <tr>
@@ -274,6 +289,7 @@ function Cargos() {
                                 <button 
                                     className='botaoAcaoCargo'
                                     onClick={() => {
+                                      scrollPositionRef.current = document.getElementById("containerTabelaCargos").scrollTop;
                                       setSelectedCargo(item);
                                       setExibeAlterar(true);
                                     }}
@@ -283,6 +299,7 @@ function Cargos() {
                                   <button 
                                     className='botaoAcaoCargo'
                                     onClick={() => {
+                                      scrollPositionRef.current = document.getElementById("containerTabelaCargos").scrollTop;
                                       setSelectedCargo(item);
                                       setExibeExcluir(true);
                                     }}

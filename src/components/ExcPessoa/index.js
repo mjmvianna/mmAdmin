@@ -38,34 +38,36 @@ function ExcPessoa({
     <div className='excPessoaComponent'>
       <strong>Exclui Pessoa?</strong>
       <table className='destaqueTable'>
-        <tr>
-          <td>Nome: </td>
-          <td>
-            <input 
-              className='excInputPessoa'
-              id='nomePessoa'
-              name='nomePessoa'
-              type='text' 
-              placeholder='Nome'
-              value={excNomePessoa}
-              readOnly
-            ></input>
-          </td>
-        </tr>
-        <tr>
-          <td>Apelido: </td>
-          <td>
-            <input 
-              className='excInputPessoa'
-              id='apelidoPessoa'
-              name='apelidoPessoa'
-              type='text' 
-              placeholder='Apelido'
-              value={excApelidoPessoa}
-              readOnly
-            ></input>
-          </td>
-        </tr>
+        <tbody>
+          <tr>
+            <td>Nome: </td>
+            <td>
+              <input 
+                className='excInputPessoa'
+                id='nomePessoa'
+                name='nomePessoa'
+                type='text' 
+                placeholder='Nome'
+                value={excNomePessoa}
+                readOnly
+              ></input>
+            </td>
+          </tr>
+          <tr>
+            <td>Apelido: </td>
+            <td>
+              <input 
+                className='excInputPessoa'
+                id='apelidoPessoa'
+                name='apelidoPessoa'
+                type='text' 
+                placeholder='Apelido'
+                value={excApelidoPessoa}
+                readOnly
+              ></input>
+            </td>
+          </tr>
+        </tbody>
       </table>
       <div>
         <button className='botaoExcPessoaComponent'

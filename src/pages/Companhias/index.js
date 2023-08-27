@@ -54,18 +54,22 @@ function Companhias() {
       await carregaCompanhias();
     }
     
-    console.log(scrollPositionRef.current);
     if (!exibeIncluir && !exibeAlterar && !exibeExcluir) {
       loadCompanhias();
-      if (scrollPositionRef.current !== 0) {
-        const xyz = scrollPositionRef.current;
-        document.getElementById("containerTabelaCompanhias").scrollTo({
-          top: xyz,
-          behavior: "instant",
-        });
-      }
     }
   }, [exibeIncluir, exibeAlterar, exibeExcluir]);
+  
+  useEffect(() => {
+    if (document.getElementById("containerTabelaCompanhias")) {
+      const scrollVar = scrollPositionRef.current;
+      document.getElementById("containerTabelaCompanhias").scrollTo(
+        { 
+          top: scrollVar,
+          behavior: "instant",
+        }
+      );
+    }
+  }, [carregaCompanhias]);
   
   function fNomeGrupo(uidGrupo) {
     const indGrupo = tabGrupos.findIndex((element) => element.uidGrupo === uidGrupo);

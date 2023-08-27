@@ -81,6 +81,7 @@ function IncCompanhia({ handleIncluiCompanhia, setSelectedCompanhia, setExibeInc
                 className='grupoSelectInc'
                 value={grupoEconomico} 
                 onChange={ (e) => setGrupoEconomico(e.target.value) }>
+              <option key='' value=''>Selecione o Grupo Econômico</option>
               {tabGrupos.map((grupo) => (
                 <option key={grupo.uidGrupo} value={grupo.uidGrupo}>
                   {grupo.nomeGrupo}

@@ -1,6 +1,6 @@
 import './pessoas.css';
 
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext, useRef } from 'react';
 import { toast } from 'react-toastify';
 import { collection, query, getDocs, doc, getDoc, setDoc, deleteDoc, addDoc } from 'firebase/firestore';
 
@@ -22,6 +22,8 @@ function Pessoas() {
   const [exibeExcluir  , setExibeExcluir  ] = useState(false);
   const [selectedPessoa, setSelectedPessoa] = useState(null);
   
+  const scrollPositionRef = useRef(0);
+  
   useEffect(() => {
     async function loadPessoas() {
       await carregaPessoas();
@@ -30,6 +32,18 @@ function Pessoas() {
     loadPessoas();
     
   }, []);
+  
+  useEffect(() => {
+    if (document.getElementById("containerTabelaPessoas")) {
+      const scrollVar = scrollPositionRef.current;
+      document.getElementById("containerTabelaPessoas").scrollTo(
+        { 
+          top: scrollVar,
+          behavior: "instant",
+        }
+      );
+    }
+  }, [carregaPessoas]);
   
   async function carregaPessoas() {
     setLoading(true);
@@ -268,13 +282,14 @@ function Pessoas() {
                     <button 
                       className='botaoNovaPessoa'
                       onClick={() => {
+                        scrollPositionRef.current = document.getElementById("containerTabelaPessoas").scrollTop;
                         setExibeIncluir(true);
                       }}
                     >
                       Nova Pessoa
                     </button>
                   )}
-                  <div className='containerTabelaPessoas'>
+                  <div className='containerTabelaPessoas' id ='containerTabelaPessoas'>
                     <table className='tabelaPessoas'>
                       <thead>
                         <tr>
@@ -314,6 +329,7 @@ function Pessoas() {
                                   <button 
                                     className='botaoAcaoPessoa'
                                     onClick={() => {
+                                      scrollPositionRef.current = document.getElementById("containerTabelaPessoas").scrollTop;
                                       setSelectedPessoa(item);
                                       setExibeAlterar(true);
                                     }}
@@ -323,6 +339,7 @@ function Pessoas() {
                                   <button 
                                     className='botaoAcaoPessoa'
                                     onClick={() => {
+                                      scrollPositionRef.current = document.getElementById("containerTabelaPessoas").scrollTop;
                                       setSelectedPessoa(item);
                                       setExibeExcluir(true);
                                     }}
