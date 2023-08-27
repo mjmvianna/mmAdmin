@@ -1,0 +1,190 @@
+.containerUsuarios {
+  height: calc(100vh - 50px);
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #1c1c1c; /* quase preto */;
+  padding: 0;
+}
+
+.containerUsuarios h3 {
+  padding:20px 0 0 0;
+  color:aliceblue;
+}
+
+.botaoNovoUsuario {
+  margin: 10px 0 15px 0;
+  padding: 5px 16px;
+  background-color: lightgrey;
+  color:#1c1c1c;
+  font-size: 14px;
+  border:none;
+  border-radius: 5px;
+  cursor:pointer;
+}
+
+.botaoNovoUsuario:hover {
+  transform: scale(1.1);
+}
+
+.containerTabelaUsuarios {
+  max-height:100%;
+  max-width:720px;
+  min-width:450px;
+  width:90%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background-color: lightgrey;
+  color:#1c1c1c;
+  font-size: 14px;
+  overflow-y: auto;
+}
+
+.tabelaUsuarios {
+  margin-top: 10px;
+  border: none;
+  border-collapse: separate;
+  border-spacing: 10px;
+  table-layout: fixed;
+}
+
+.tabelaUsuarios th{
+  border-bottom: 1px solid;
+}
+
+.headerTabUsuarios {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+}
+
+.headerTabUsuariosButtons{
+  margin-left: 5px;
+  display: flex;
+}
+
+.headerTabUsuariosButtons button{
+  margin: 0;
+  margin-right: 2px;
+  background-color: lightgrey;
+  color:#1c1c1c;
+  border:none;
+  cursor:pointer;
+}
+
+.tabelaUsuarios td{
+  padding: 0;
+  border: none;
+}
+
+.tabelaUsuarios td.tdNome{
+  width: 240px;
+}
+
+.tabelaUsuarios td.tdEmail{
+  width: 240px;
+}
+
+.tabelaUsuarios td.tdStatus{
+  width: 80px;
+}
+
+.tabelaUsuarios td.tdBotoesUsuarios{
+  display: flex;
+  flex-direction: row;
+  width: 62px;
+}
+
+.botaoAcaoUsuario {
+  margin: 0 2px;
+  padding: 2px 5px;
+  background-color: whitesmoke;
+  color:#1c1c1c;
+  font-size: 14px;
+  border:none;
+  border-radius: 5px;
+  cursor:pointer;
+}
+
+.botaoAcaoUsuario:hover {
+  transform: scale(1.1);
+  background-color: #999999;
+}
+
+@media screen and (max-width:599px) {
+
+  .containerUsuarios {
+    max-width: 100%;
+  }
+
+  .containerTabelaUsuarios {
+    width: 90%;
+    max-width: 499px;
+  }
+  
+  .tabelaUsuarios {
+    margin:0;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .tabelaUsuarios thead {
+    border:none;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+  
+  .tabelaUsuarios th{
+    border-bottom: none;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+  }
+  
+  .tabelaUsuarios td{
+    min-width: 330px;
+    display: block;
+    font-size: 0.9rem;
+    text-align: right;
+  }
+
+  .tabelaUsuarios td.tdNome{
+    border-top: 1px solid black;
+    width: 100%;
+  }
+  
+  .tabelaUsuarios td.tdEmail{
+    width: 100%;
+  }
+
+  .tabelaUsuarios td.tdStatus{
+    width: 100%;
+  }
+
+  .tabelaUsuarios td.tdBotoesUsuarios{
+    margin-top: 3px;
+    width: 100%;
+    justify-content: flex-end;
+  }
+  
+  .botaoAcaoUsuario {
+    margin-bottom: 5px;
+  }
+
+  .tabelaUsuarios td::before{
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+    text-transform: none;
+  }
+  
+}

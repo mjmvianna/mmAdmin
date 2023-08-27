@@ -1,0 +1,177 @@
+.containerCargos {
+  height: calc(100vh - 50px);
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #1c1c1c; /* quase preto */;
+}
+
+.containerCargos h3 {
+  padding:20px 0 0 0;
+  color:aliceblue;
+}
+
+.botaoNovoCargo {
+  margin: 10px 0 15px 0;
+  padding: 5px 16px;
+  background-color: lightgrey;
+  color:#1c1c1c;
+  font-size: 14px;
+  border:none;
+  border-radius: 5px;
+  cursor:pointer;
+}
+
+.destaqueCargo {
+  margin: 15px 0;
+  padding: 10px 0;
+  border-top: 1px solid white;
+  border-bottom: 1px solid white;
+  width: 499px;
+  color: lightgrey;
+  background-color: #1c1c1c;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 14px;
+}
+
+.containerTabelaCargos {
+  max-height:100%;
+  width:90%;
+  max-width: 499px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background-color: lightgrey;
+  color:#1c1c1c;
+  font-size: 14px;
+  overflow-y: auto;
+}
+
+.tabelaCargos {
+  margin-top: 10px;
+  border: none;
+  border-collapse: separate;
+  border-spacing: 10px;
+  table-layout: fixed;
+}
+
+.tabelaCargos th{
+  border-bottom: 1px solid;
+}
+
+.headerTabCargos {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+}
+
+.headerTabCargosButtons{
+  margin-left: 5px;
+  display: flex;
+}
+
+.headerTabCargosButtons button{
+  margin: 0;
+  margin-right: 2px;
+  background-color: lightgrey;
+  color:#1c1c1c;
+  border:none;
+  cursor:pointer;
+}
+
+.tabelaCargos td{
+  padding: 0;
+  border: none;
+}
+
+.tabelaCargos td.tdBotoesCargos{
+  display: flex;
+  flex-direction: row;
+}
+
+.tabelaCargos td.tdNomeCargo{
+  width: 350px;
+}
+
+.botaoAcaoCargo {
+  margin: 0 2px;
+  padding: 2px 5px;
+  background-color: whitesmoke;
+  color:#1c1c1c;
+  font-size: 14px;
+  border:none;
+  border-radius: 5px;
+  cursor:pointer;
+}
+
+.botaoAcaoCargo:hover {
+  background-color: #999999;
+}
+
+@media screen and (max-width:199px) {
+  
+  .containerTabelaCargos {
+    background-color: #1c1c1c; /* quase preto */;
+    width: 100%;
+  }
+  
+  .tabelaCargos {
+    background-color: lightgrey;
+    width: 100%;
+    margin:0;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .tabelaCargos thead{
+    border:none;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+  
+  .tabelaCargos th{
+    border-bottom: none;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+  }
+  
+  .tabelaCargos td{
+    margin: 1px;
+    display: block;
+    font-size: 0.9rem;
+    text-align: right;
+  }
+  
+  .tabelaCargos td.tdBotoesCargos{
+    margin-top: 3px;
+    width: 95%;
+    justify-content: flex-end;
+  }
+  
+  .tabelaCargos td.tdNomeCargo{
+    border-top: 1px solid black;
+    width: 95%;
+  }
+  
+  .tabelaCargos td::before{
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+    text-transform: none;
+  }
+
+}

@@ -1,0 +1,67 @@
+.excUsuarioComponent {
+  margin-bottom: 15px;
+  padding: 10px 0;
+  border-top: 1px solid white;
+  border-bottom: 1px solid white;
+  width:650px;
+  color: lightgrey;
+  background-color: #1c1c1c;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 14px;
+}
+
+.excUsuarioComponent strong {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.excUsuarioComponent ul {
+  list-style-type: none;
+  margin-bottom: 10px;
+}
+
+.excUsuarioComponent li {
+  margin-bottom: 5px;
+}
+
+.excInputUsuario {
+  margin-bottom: 10px;
+  padding: 3px 5px;
+}
+
+.botaoExcUsuarioComponent {
+  margin: 5px 5px 0 5px;
+  padding: 5px 11px;
+  background-color: whitesmoke;
+  color:#1c1c1c;
+  font-size: 14px;
+  border:none;
+  border-radius: 5px;
+  cursor:pointer;
+}
+
+.botaoExcUsuarioComponentDisabled {
+  visibility: hidden;
+  margin: 5px 5px 0 5px;
+  padding: 5px 11px;
+  background-color: whitesmoke;
+  color:#1c1c1c;
+  font-size: 14px;
+  border:none;
+  border-radius: 5px;
+  cursor:pointer;
+}
+
+.botaoExcUsuarioComponent:hover {
+  transform: scale(1.1);
+}
+
+@media screen and (max-width:699px) {
+  .excUsuarioComponent {
+    width:499px;
+  }
+  
+}

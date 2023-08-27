@@ -1,0 +1,200 @@
+header {
+  width: 100vw;
+  height: 50px;
+  background-color: rgb(230, 230, 230);
+  padding: 0 7px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.app-name {
+  color: navy;
+  font-size: 18px;
+  width:174px;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-name a {
+  display:inline-block;
+  text-align: center;
+  cursor: pointer;
+}
+
+.app-name a:visited {
+  color: navy;
+}
+
+.header-buttons {
+  margin: 0;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  padding: 0;
+}
+
+.floatingMenu-div {
+  display: none;
+  background-color: rgb(230, 230, 230);
+  margin: 0;
+  padding: 0;
+}
+
+.menu-button {
+  display: none;
+  min-width: 60px;
+  background-color: rgb(0, 0, 180);
+  padding: 8px 16px;
+  margin-left: 5px;
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+  color: white;
+  font-size: 12px;
+  cursor: pointer;
+  text-decoration: none; /* não modifica links */
+}
+
+.menu-button:hover {
+  transform: scale(1.1);
+}
+
+.header-button {
+  min-width: 60px;
+  background-color: rgb(0, 0, 180);
+  padding: 8px 12px;
+  margin-left: 5px;
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+  color: white;
+  font-size: 12px;
+  cursor: pointer;
+  text-decoration: none; /* não modifica links */
+}
+
+.header-button:hover {
+  transform: scale(1.05);
+}
+
+.header-button-sair {
+  min-width: 60px;
+  background-color: rgb(0, 0, 180);
+  padding: 3px 16px;
+  margin-left: 5px;
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+  color: white;
+  font-size: 12px;
+  cursor: pointer;
+  text-decoration: none; /* não modifica links */
+}
+
+.header-button-sair:hover {
+  transform: scale(1.05);
+}
+
+.header-button-usuarios {
+  visibility: hidden;
+  min-width: 60px;
+  background-color: rgb(0, 0, 180);
+  padding: 8px 16px;
+  margin-left: 5px;
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+  color: white;
+  font-size: 12px;
+  cursor: pointer;
+  text-decoration: none; /* não modifica links */
+}
+
+.header-button-usuarios:hover {
+  transform: scale(1.05);
+}
+
+.floating-menu-exibe {
+  display: none;
+  position: fixed;
+  top: 15px;
+  right: 25px;
+  z-index: 999;
+  transition: transform 0.3s ease-in-out;
+}
+
+.floating-menu-exibe.open {
+  transform: translateX(-100%);
+}
+
+.menu-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  text-align: right;
+}
+
+.menu-items li {
+  width: 130px;
+  padding: 0;
+  margin: 0;
+  background-color: #f0f0f0;
+  text-align: center;
+  cursor: pointer;
+}
+
+.menu-items li:hover {
+  background-color: #f0f0f0;
+}
+
+.floating-button {
+  width: 100px;
+  height: 27px;
+  margin: 0;
+  padding: 10px 3px 3px 0;
+  color: rgb(0, 0, 180);
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none; /* não modifica links */
+  border: none;
+  font-size: 15px;
+}
+
+.floating-button:hover {
+  font-size:17px;
+}
+
+@media screen and (max-width: 779px) {
+  .header-buttons {
+    display: none;
+  }
+
+  .menu-button {
+    display: block;
+  }
+
+  .floatingMenu-div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .floating-menu-exibe {
+    display: flex;
+  }
+
+  .menu-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background-color: #fff;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+  }
+  
+}

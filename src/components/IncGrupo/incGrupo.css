@@ -1,0 +1,41 @@
+.incGrupoComponent {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.incGrupoComponent strong {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.incInputGrupo {
+  margin-bottom: 10px;
+  margin-left: 3px;
+  padding: 3px 5px;
+}
+
+.botaoIncGrupoComponent {
+  margin: 5px 5px 0 5px;
+  padding: 5px 11px;
+  background-color: whitesmoke;
+  color:#1c1c1c;
+  font-size: 14px;
+  border:none;
+  border-radius: 5px;
+  cursor:pointer;
+}
+
+.botaoIncGrupoComponentDisabled {
+  visibility: hidden;
+  margin: 5px 5px 0 5px;
+  padding: 5px 11px;
+  background-color: whitesmoke;
+  color:#1c1c1c;
+  font-size: 14px;
+  border:none;
+  border-radius: 5px;
+  cursor:pointer;
+}

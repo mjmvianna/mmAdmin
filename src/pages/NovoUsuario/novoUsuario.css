@@ -1,0 +1,18 @@
+.formNovoUsuario h4 {
+  color: aliceblue;
+  text-align: center;
+}
+
+.formNovoUsuario input {
+  width: 350px;
+  margin-bottom: 10px;
+  padding: 4px;
+  border: none;
+}
+
+.formNovoUsuario select {
+  width: 350px;
+  margin-bottom: 10px;
+  padding: 4px 0;
+  border: none;
+}

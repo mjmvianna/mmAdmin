@@ -1,0 +1,71 @@
+.altAdministradorComponent {
+  width: 499px;
+  margin: 5px;
+  padding: 10px 0;
+  border-top: 1px solid aliceblue;
+  border-bottom: 1px solid aliceblue;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-center;
+  align-items: center;
+  color: aliceblue;
+}
+
+.altAdministradorComponent strong {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.altAdminTabLabels {
+  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.altAdminLabel {
+  font-size: 0.9rem;
+}
+
+.altInputAdministrador {
+  margin-bottom: 4px;
+  padding: 3px 3px;
+}
+
+.altAdminBotoes {
+  margin-top: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.botaoAltAdministradorComponent {
+  margin: 5px 5px 0 5px;
+  padding: 5px 11px;
+  background-color: whitesmoke;
+  color:#1c1c1c;
+  font-size: 14px;
+  border:none;
+  border-radius: 5px;
+  cursor:pointer;
+}
+
+.botaoAltAdministradorComponentDisabled {
+  visibility: hidden;
+  margin: 5px 5px 0 5px;
+  padding: 5px 11px;
+  background-color: whitesmoke;
+  color:#1c1c1c;
+  font-size: 14px;
+  border:none;
+  border-radius: 5px;
+  cursor:pointer;
+}
+
+.grupoSelectAlt {
+  margin: 0;
+  margin-bottom: 8px;
+  padding: 3px;
+}

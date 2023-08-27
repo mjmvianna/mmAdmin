@@ -1,0 +1,34 @@
+.logcontainer {
+  height: calc(100vh - 50px);
+  width: 100%;
+  max-width: 800px;
+  max-height: 800px;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: blue;/* #1c1c1c; /* Fundo quase preto */;
+  overflow: hidden;
+}
+
+.logBoard {
+  width: 100%;
+  height: 100%;
+  max-width: 800px;
+  max-height: 800px;
+  background-color: bisque;
+  display: flex;
+  flex-direction: column;
+}
+
+.logRow {
+  display: flex;
+}
+
+.logSquare {
+  flex-grow: 1;
+  padding: 20px;
+  border: 1px solid black;
+}

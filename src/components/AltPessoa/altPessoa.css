@@ -1,0 +1,40 @@
+.altPessoaComponent {
+  width: 499px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.altPessoaComponent strong {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.altInputPessoa {
+  margin-bottom: 10px;
+  padding: 3px 5px;
+}
+
+.botaoAltPessoaComponent {
+  margin: 5px 5px 0 5px;
+  padding: 5px 11px;
+  background-color: whitesmoke;
+  color:#1c1c1c;
+  font-size: 14px;
+  border:none;
+  border-radius: 5px;
+  cursor:pointer;
+}
+
+.botaoAltPessoaComponentDisabled {
+  visibility: hidden;
+  margin: 5px 5px 0 5px;
+  padding: 5px 11px;
+  background-color: whitesmoke;
+  color:#1c1c1c;
+  font-size: 14px;
+  border:none;
+  border-radius: 5px;
+  cursor:pointer;
+}

@@ -1,0 +1,17 @@
+.containerErro {
+  height: calc(100vh - 50px);
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #1c1c1c; /* Fundo quase preto */;
+  padding: 0;
+}
+
+.containerErro h2 {
+  padding:20px 0 0 0;
+  color:aliceblue;
+}
+

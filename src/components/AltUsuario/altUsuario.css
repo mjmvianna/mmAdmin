@@ -1,0 +1,61 @@
+.altUsuarioComponent {
+  margin-bottom: 15px;
+  padding: 10px 0;
+  border-top: 1px solid white;
+  border-bottom: 1px solid white;
+  width: 499px;
+  color: lightgrey;
+  background-color: #1c1c1c;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 14px;
+}
+
+.altUsuarioComponent strong {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.altUsuarioComponent input {
+  width: 250px;
+}
+
+.altEmailUsuario {
+  margin-bottom: 10px;
+  padding: 3px 6px;
+}
+
+.altNomeUsuario {
+  margin-bottom: 10px;
+  padding: 3px 6px;
+}
+
+.altStatusUsuario {
+  margin-bottom: 10px;
+  padding: 3px 6px;
+}
+
+.botaoAltUsuarioComponent {
+  margin: 0px 5px 0 5px;
+  padding: 5px 11px;
+  background-color: whitesmoke;
+  color:#1c1c1c;
+  font-size: 14px;
+  border:none;
+  border-radius: 5px;
+  cursor:pointer;
+}
+
+.botaoAltUsuarioComponentDisabled {
+  visibility: hidden;
+  margin: 0px 5px 0 5px;
+  padding: 5px 11px;
+  background-color: whitesmoke;
+  color:#1c1c1c;
+  font-size: 14px;
+  border:none;
+  border-radius: 5px;
+  cursor:pointer;
+}

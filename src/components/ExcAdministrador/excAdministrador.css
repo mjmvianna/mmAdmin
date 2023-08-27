@@ -1,0 +1,71 @@
+.excAdministradorComponent {
+  width: 499px;
+  margin: 5px;
+  padding: 10px 0;
+  border-top: 1px solid aliceblue;
+  border-bottom: 1px solid aliceblue;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-center;
+  align-items: center;
+  color: aliceblue;
+}
+
+.excAdministradorComponent strong {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.excAdminTabLabels {
+  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.excAdminLabel {
+  font-size: 0.9rem;
+}
+
+.excInputAdministrador {
+  margin-bottom: 4px;
+  padding: 3px 3px;
+}
+
+.excAdminBotoes {
+  margin-top: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.botaoExcAdministradorComponent {
+  margin: 5px 5px 0 5px;
+  padding: 5px 11px;
+  background-color: whitesmoke;
+  color:#1c1c1c;
+  font-size: 14px;
+  border:none;
+  border-radius: 5px;
+  cursor:pointer;
+}
+
+.botaoExcAdministradorComponentDisabled {
+  visibility: hidden;
+  margin: 5px 5px 0 5px;
+  padding: 5px 11px;
+  background-color: whitesmoke;
+  color:#1c1c1c;
+  font-size: 14px;
+  border:none;
+  border-radius: 5px;
+  cursor:pointer;
+}
+
+.grupoSelectExc {
+  margin: 0;
+  margin-bottom: 8px;
+  padding: 3px;
+}
