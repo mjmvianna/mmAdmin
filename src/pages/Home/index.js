@@ -1,5 +1,4 @@
 // Melhorias:
-// -Na volta de inclusão, alteração, exclusão manter o filtro selecionados (se houver)
 // -Alterar o ícone do index.html
 
 import './home.css';
@@ -36,7 +35,7 @@ function Home() {
   const [exibeExcluir  , setExibeExcluir  ] = useState(false);
   const [ordenacao     , setOrdenacao     ] = useState('administrador');
   const [ordenacaoAsc  , setOrdenacaoAsc  ] = useState(true);
-  const [filtro        , setFiltro        ] = useState('administrador');
+  const [filtro        , setFiltro        ] = useState('');//useState('administrador');
   const [conteudoFiltro, setConteudoFiltro] = useState([]);
   const [itemFiltro    , setItemFiltro    ] = useState('');
   
@@ -77,10 +76,6 @@ function Home() {
     }
     fetchTabelas();
   }, []);
-  
-  useEffect(() => {
-    fOrdenaLista(tabAdminExibicao);
-  },[ordenacao, ordenacaoAsc]);
   
   useEffect(() => {
     setItemFiltro('');
@@ -136,10 +131,15 @@ function Home() {
     const ind = 'indiceFiltro';
     listaFiltro.sort((a, b) => (a[ind] > b[ind]) ? 1 : ((b[ind] > a[ind]) ? -1 : 0));
     setConteudoFiltro(listaFiltro);
-    if (listaFiltro.length !== 0) {
-      setItemFiltro(listaFiltro[0].uidFiltro);
-    }
   }, [filtro, tabPessoas, tabGrupos, tabCompanhias, tabOrgaos, tabCargos]);
+  
+  useEffect(() => {
+    fOrdenaLista(tabAdminExibicao);
+  },[ordenacao, ordenacaoAsc]);
+  
+  useEffect(() => {
+    filtraTabela();
+  }, [itemFiltro]);
   
   useEffect(() => {
     if (!exibeIncluir && !exibeAlterar && !exibeExcluir) {
@@ -148,6 +148,7 @@ function Home() {
   },[loadingTabelas, exibeIncluir, exibeAlterar, exibeExcluir]);
   
   useEffect(() => {
+    filtraTabela();
     if (document.getElementById("containerDadosAdministradores")) {
       const scrollVar = scrollPositionRef.current;
       document.getElementById("containerDadosAdministradores").scrollTo(
@@ -245,82 +246,84 @@ function Home() {
     
     let listaOrdenada = [];
     
-    lista.forEach((doc) => {
-      const uidAdministrador     = doc.uidAdministrador;
-      const uidPessoa            = doc.uidPessoa;
-      const uidCompanhia         = doc.uidCompanhia;
-      const uidOrgao             = doc.uidOrgao;
-      const uidCargo             = doc.uidCargo;
-      const uidGrupoEconomico    = doc.uidGrupoEconomico;
-      const dtInicioMandato      = doc.dtInicioMandato;
-      const dtFimMandato         = doc.dtFimMandato;
-      const nomeAdministrador    = doc.nomeAdministrador;
-      const apelidoAdministrador = doc.apelidoAdministrador;
-      const razaoSocialCompanhia = doc.razaoSocialCompanhia;
-      const shortNameCompanhia   = doc.shortNameCompanhia;
-      const nomeGrupoEconomico   = doc.nomeGrupoEconomico;
-      const nomeOrgao            = doc.nomeOrgao;
-      const siglaOrgao           = doc.siglaOrgao;
-      const nomeCargo            = doc.nomeCargo;
-      const dtInicioFormatted    = doc.dtInicioFormatted;
-      const dtFimFormatted       = doc.dtFimFormatted;
-      const anoInicioMandato     = String(dtInicioMandato.getFullYear());
-      const mesInicioMandato     = String(dtInicioMandato.getMonth() + 1).padStart(2, '0');
-      const diaInicioMandato     = String(dtInicioMandato.getDate()).padStart(2, '0');
-      let   anoFimMandato        = '';
-      let   mesFimMandato        = '';
-      let   diaFimMandato        = '';
-      if (dtFimMandato !== null) {
-        anoFimMandato = String(dtFimMandato.getFullYear()) ;
-        mesFimMandato = String(dtFimMandato.getMonth() + 1).padStart(2, '0');
-        diaFimMandato = String(dtFimMandato.getDate()).padStart(2, '0');
-      }
-      
-      let   sortField            = nomeAdministrador;
-      if (ordenacao === 'administrador') {
-        sortField = nomeAdministrador.concat(shortNameCompanhia).concat(nomeOrgao);
-      } else if (ordenacao === 'grupo') {
-        sortField = nomeGrupoEconomico.concat(shortNameCompanhia).concat(nomeOrgao);
-      } else if (ordenacao === 'companhia') {
-        sortField = razaoSocialCompanhia.concat(nomeAdministrador).concat(nomeOrgao);
-      } else if (ordenacao === 'orgao') {
-        sortField = nomeOrgao.concat(nomeCargo).concat(nomeAdministrador);
-      } else if (ordenacao === 'cargo' ) {
-        sortField = nomeCargo.concat(shortNameCompanhia).concat(nomeAdministrador);
-      } else if (ordenacao === 'inicioMandato') {
-        sortField = anoInicioMandato.concat(mesInicioMandato).concat(diaInicioMandato).concat(nomeAdministrador).concat(shortNameCompanhia);
-      } else if (ordenacao === 'fimMandato') {
-        sortField = anoFimMandato.concat(mesFimMandato).concat(diaFimMandato).concat(nomeAdministrador).concat(shortNameCompanhia);
-      }
-      
-      listaOrdenada.push({
-        uidAdministrador    : uidAdministrador,
-        uidPessoa           : uidPessoa,
-        uidCompanhia        : uidCompanhia,
-        uidOrgao            : uidOrgao,
-        uidCargo            : uidCargo,
-        uidGrupoEconomico   : uidGrupoEconomico,
-        dtInicioMandato     : dtInicioMandato,
-        dtFimMandato        : dtFimMandato,
-        nomeAdministrador   : nomeAdministrador,
-        apelidoAdministrador: apelidoAdministrador,
-        razaoSocialCompanhia: razaoSocialCompanhia,
-        shortNameCompanhia  : shortNameCompanhia,
-        nomeGrupoEconomico  : nomeGrupoEconomico,
-        nomeOrgao           : nomeOrgao,
-        siglaOrgao          : siglaOrgao,
-        nomeCargo           : nomeCargo,
-        dtInicioFormatted   : dtInicioFormatted,
-        dtFimFormatted      : dtFimFormatted,
-        nomeIndice          : sortField.toUpperCase(),
+    if (lista.length !== 0) {
+      lista.forEach((doc) => {
+        const uidAdministrador     = doc.uidAdministrador;
+        const uidPessoa            = doc.uidPessoa;
+        const uidCompanhia         = doc.uidCompanhia;
+        const uidOrgao             = doc.uidOrgao;
+        const uidCargo             = doc.uidCargo;
+        const uidGrupoEconomico    = doc.uidGrupoEconomico;
+        const dtInicioMandato      = doc.dtInicioMandato;
+        const dtFimMandato         = doc.dtFimMandato;
+        const nomeAdministrador    = doc.nomeAdministrador;
+        const apelidoAdministrador = doc.apelidoAdministrador;
+        const razaoSocialCompanhia = doc.razaoSocialCompanhia;
+        const shortNameCompanhia   = doc.shortNameCompanhia;
+        const nomeGrupoEconomico   = doc.nomeGrupoEconomico;
+        const nomeOrgao            = doc.nomeOrgao;
+        const siglaOrgao           = doc.siglaOrgao;
+        const nomeCargo            = doc.nomeCargo;
+        const dtInicioFormatted    = doc.dtInicioFormatted;
+        const dtFimFormatted       = doc.dtFimFormatted;
+        const anoInicioMandato     = String(dtInicioMandato.getFullYear());
+        const mesInicioMandato     = String(dtInicioMandato.getMonth() + 1).padStart(2, '0');
+        const diaInicioMandato     = String(dtInicioMandato.getDate()).padStart(2, '0');
+        let   anoFimMandato        = '';
+        let   mesFimMandato        = '';
+        let   diaFimMandato        = '';
+        if (dtFimMandato !== null) {
+          anoFimMandato = String(dtFimMandato.getFullYear()) ;
+          mesFimMandato = String(dtFimMandato.getMonth() + 1).padStart(2, '0');
+          diaFimMandato = String(dtFimMandato.getDate()).padStart(2, '0');
+        }
+        
+        let   sortField            = nomeAdministrador;
+        if (ordenacao === 'administrador') {
+          sortField = nomeAdministrador.concat(shortNameCompanhia).concat(nomeOrgao);
+        } else if (ordenacao === 'grupo') {
+          sortField = nomeGrupoEconomico.concat(shortNameCompanhia).concat(nomeOrgao);
+        } else if (ordenacao === 'companhia') {
+          sortField = razaoSocialCompanhia.concat(nomeAdministrador).concat(nomeOrgao);
+        } else if (ordenacao === 'orgao') {
+          sortField = nomeOrgao.concat(nomeCargo).concat(nomeAdministrador);
+        } else if (ordenacao === 'cargo' ) {
+          sortField = nomeCargo.concat(shortNameCompanhia).concat(nomeAdministrador);
+        } else if (ordenacao === 'inicioMandato') {
+          sortField = anoInicioMandato.concat(mesInicioMandato).concat(diaInicioMandato).concat(nomeAdministrador).concat(shortNameCompanhia);
+        } else if (ordenacao === 'fimMandato') {
+          sortField = anoFimMandato.concat(mesFimMandato).concat(diaFimMandato).concat(nomeAdministrador).concat(shortNameCompanhia);
+        }
+        
+        listaOrdenada.push({
+          uidAdministrador    : uidAdministrador,
+          uidPessoa           : uidPessoa,
+          uidCompanhia        : uidCompanhia,
+          uidOrgao            : uidOrgao,
+          uidCargo            : uidCargo,
+          uidGrupoEconomico   : uidGrupoEconomico,
+          dtInicioMandato     : dtInicioMandato,
+          dtFimMandato        : dtFimMandato,
+          nomeAdministrador   : nomeAdministrador,
+          apelidoAdministrador: apelidoAdministrador,
+          razaoSocialCompanhia: razaoSocialCompanhia,
+          shortNameCompanhia  : shortNameCompanhia,
+          nomeGrupoEconomico  : nomeGrupoEconomico,
+          nomeOrgao           : nomeOrgao,
+          siglaOrgao          : siglaOrgao,
+          nomeCargo           : nomeCargo,
+          dtInicioFormatted   : dtInicioFormatted,
+          dtFimFormatted      : dtFimFormatted,
+          nomeIndice          : sortField.toUpperCase(),
+        });
       });
-    });
-    
-    const ind = 'nomeIndice';
-    if (ordenacaoAsc) {
-      listaOrdenada.sort((a, b) => (a[ind] > b[ind]) ? 1 : ((b[ind] > a[ind]) ? -1 : 0));
-    } else {
-      listaOrdenada.sort((a, b) => (a[ind] < b[ind]) ? 1 : ((b[ind] < a[ind]) ? -1 : 0));
+      
+      const ind = 'nomeIndice';
+      if (ordenacaoAsc) {
+        listaOrdenada.sort((a, b) => (a[ind] > b[ind]) ? 1 : ((b[ind] > a[ind]) ? -1 : 0));
+      } else {
+        listaOrdenada.sort((a, b) => (a[ind] < b[ind]) ? 1 : ((b[ind] < a[ind]) ? -1 : 0));
+      }
     }
     setTabAdminExibicao([...listaOrdenada]);
   }
@@ -404,16 +407,17 @@ function Home() {
         lista = tabAdministradores.filter(item => item.uidCargo===itemFiltro);
       }
       // Testa se a tabela ficou vazia. Se ficou, exibe mensagem de erro e carrega a tabela completa
-      if (lista.length !== 0) {
+      //if (lista.length !== 0) {
         fOrdenaLista(lista);
-      } else {
-        toast.error('Não há registro que satisfaça o filtro selecionado');
-        fOrdenaLista(tabAdministradores);
-      }
+      //} else {
+      //  toast.error('Não há registro que satisfaça o filtro selecionado');
+      //  fOrdenaLista(tabAdministradores);
+      //}
     }
   }
   
   function cancelaFiltroTabela() {
+    setFiltro('');
     fOrdenaLista(tabAdministradores);
   }
   
@@ -428,175 +432,160 @@ function Home() {
         </>
       ) : (
         <>
-          { tabAdminExibicao.length === 0 ? (
-            (exibeIncluir && !selectedAdministrador) ? (
-              <>
-                <h3>Administradores</h3>
-                <div>
-                  {<IncAdministrador
-                      setExibeIncluir  ={setExibeIncluir}
-                  />}
-                </div>
-              </>
-            ) : (
-              <>
-                <h3>Administradores</h3>
-                <div className='container'>
-                  <h3>Não há Administrador cadastrado</h3>
-                  {userMaster && (<button 
-                    className='botaoNovoAdministrador'
-                    onClick={() => {
-                      setExibeIncluir(true);
-                    }}>
-                    Novo Administrador
-                  </button>)}
-                </div>
-              </>
-            )
-          ) : (
+          { exibeIncluir && !selectedAdministrador && (
             <>
-              { exibeIncluir && !selectedAdministrador && (
-                <>
+              <h3>Administradores</h3>
+              <div>
+                {<IncAdministrador
+                  setExibeIncluir  ={setExibeIncluir}
+              />}
+              </div>
+            </>
+          )}
+          { exibeAlterar && selectedAdministrador && (
+            <>
+              <h3>Administradores</h3>
+              <div>
+                <AltAdministrador
+                    altUidAdministrador = {selectedAdministrador.uidAdministrador}
+                    altUidPessoa        = {selectedAdministrador.uidPessoa}
+                    altUidCompanhia     = {selectedAdministrador.uidCompanhia}
+                    altUidOrgao         = {selectedAdministrador.uidOrgao}
+                    altUidCargo         = {selectedAdministrador.uidCargo}
+                    altDtInicioMandato  = {selectedAdministrador.dtInicioMandato}
+                    altDtFimMandato     = {selectedAdministrador.dtFimMandato}
+                    setSelectedAdministrador = {setSelectedAdministrador}
+                    setExibeAlterar          = {setExibeAlterar}
+                />
+              </div>
+            </>
+          )}
+          { exibeExcluir && selectedAdministrador && (
+            <>
+              <h3>Administradores</h3>
+              <div>
+                <div>
+                  <ExcAdministrador
+                    excUidAdministrador = {selectedAdministrador.uidAdministrador}
+                    excNomeAdministrador= {selectedAdministrador.nomeAdministrador}
+                    excRazaoSocial      = {selectedAdministrador.razaoSocialCompanhia}
+                    excNomeOrgao        = {selectedAdministrador.nomeOrgao}
+                    excNomeCargo        = {selectedAdministrador.nomeCargo}
+                    excDtInicioMandato  = {selectedAdministrador.dtInicioMandato}
+                    excDtFimMandato     = {selectedAdministrador.dtFimMandato}
+                    setSelectedAdministrador = {setSelectedAdministrador}
+                    setExibeExcluir          = {setExibeExcluir}
+                  />
+                </div>
+              </div>
+            </>
+          )}
+          { !exibeIncluir && !exibeExcluir && !exibeAlterar && (
+            <>
+              <div className='headerAdministradores'>
+                <div className='headerTituloInclui'>
                   <h3>Administradores</h3>
-                  <div>
-                    {<IncAdministrador
-                      setExibeIncluir  ={setExibeIncluir}
-                  />}
-                  </div>
-                </>
-              )}
-              { exibeAlterar && selectedAdministrador && (
-                <>
-                  <h3>Administradores</h3>
-                  <div>
-                    <AltAdministrador
-                        altUidAdministrador = {selectedAdministrador.uidAdministrador}
-                        altUidPessoa        = {selectedAdministrador.uidPessoa}
-                        altUidCompanhia     = {selectedAdministrador.uidCompanhia}
-                        altUidOrgao         = {selectedAdministrador.uidOrgao}
-                        altUidCargo         = {selectedAdministrador.uidCargo}
-                        altDtInicioMandato  = {selectedAdministrador.dtInicioMandato}
-                        altDtFimMandato     = {selectedAdministrador.dtFimMandato}
-                        setSelectedAdministrador = {setSelectedAdministrador}
-                        setExibeAlterar          = {setExibeAlterar}
-                    />
-                  </div>
-                </>
-              )}
-              { exibeExcluir && selectedAdministrador && (
-                <>
-                  <h3>Administradores</h3>
-                  <div>
-                    <div>
-                      <ExcAdministrador
-                        excUidAdministrador = {selectedAdministrador.uidAdministrador}
-                        excNomeAdministrador= {selectedAdministrador.nomeAdministrador}
-                        excRazaoSocial      = {selectedAdministrador.razaoSocialCompanhia}
-                        excNomeOrgao        = {selectedAdministrador.nomeOrgao}
-                        excNomeCargo        = {selectedAdministrador.nomeCargo}
-                        excDtInicioMandato  = {selectedAdministrador.dtInicioMandato}
-                        excDtFimMandato     = {selectedAdministrador.dtFimMandato}
-                        setSelectedAdministrador = {setSelectedAdministrador}
-                        setExibeExcluir          = {setExibeExcluir}
-                      />
-                    </div>
-                  </div>
-                </>
-              )}
-              { !exibeIncluir && !exibeExcluir && !exibeAlterar && (
-                <>
-                  <div className='headerAdministradores'>
-                    <div className='headerTituloInclui'>
-                      <h3>Administradores</h3>
-                      {userMaster && 
-                      (<>
-                        <button 
-                          className='botaoNovoAdministrador'
-                          onClick={() => {
-                            scrollPositionRef.current = document.getElementById("containerDadosAdministradores").scrollTop;
-                            setExibeIncluir(true);
-                          }}
-                        >
-                          Novo Registro
-                        </button>
-                      </>)
-                      }
-                    </div>
-                    <div className='headerBoxes'>
-                      <div className='OrdenAdministradores'>
-                        <small>Ordenação</small>
-                        <select
-                          className='selOptionsAdministrador'
-                          id='selOrdenAdministrador'
-                          value={ordenacao}
-                          onChange={(e) => {
+                  {userMaster && 
+                  (<>
+                    <button 
+                      className='botaoNovoAdministrador'
+                      onClick={() => {
+                        scrollPositionRef.current = document.getElementById("containerDadosAdministradores").scrollTop;
+                        setExibeIncluir(true);
+                      }}
+                    >
+                      Novo Registro
+                    </button>
+                  </>)
+                  }
+                </div>
+                <div className='headerBoxes'>
+                  <div className='OrdenAdministradores'>
+                    <small>Ordenação</small>
+                    <select
+                      className='selOptionsAdministrador'
+                      id='selOrdenAdministrador'
+                      value={ordenacao}
+                      onChange={(e) => {
+                        scrollPositionRef.current = 0;
+                        setOrdenacao(e.target.value)
+                      }}
+                    >
+                      <option key='ordAdmin'     value='administrador'>Administrador</option>
+                      <option key='ordGrupo'     value='grupo'        >Grupo Econômico</option>
+                      <option key='ordCompanhia' value='companhia'    >Companhia</option>
+                      <option key='ordOrgao'     value='orgao'        >Órgão da Administração</option>
+                      <option key='ordCargo'     value='cargo'        >Cargo</option>
+                      <option key='ordInicio'    value='inicioMandato'>Início do Mandato</option>
+                      <option key='ordFim'       value='fimMandato'   >Fim do Mandato</option>
+                    </select>
+                    <div className='botOrdenAdministrador'>
+                      <div className='botAscOrdenAdministrador'>
+                        <button onClick={() => {
                             scrollPositionRef.current = 0;
-                            setOrdenacao(e.target.value)
-                          }}
-                        >
-                          <option key='ordAdmin'     value='administrador'>Administrador</option>
-                          <option key='ordGrupo'     value='grupo'        >Grupo Econômico</option>
-                          <option key='ordCompanhia' value='companhia'    >Companhia</option>
-                          <option key='ordOrgao'     value='orgao'        >Órgão da Administração</option>
-                          <option key='ordCargo'     value='cargo'        >Cargo</option>
-                          <option key='ordInicio'    value='inicioMandato'>Início do Mandato</option>
-                          <option key='ordFim'       value='fimMandato'   >Fim do Mandato</option>
-                        </select>
-                        <div className='botOrdenAdministrador'>
-                          <div className='botAscOrdenAdministrador'>
-                            <button onClick={() => {
-                                scrollPositionRef.current = 0;
-                                setOrdenacaoAsc(true)
-                              }}>
-                              <SortAscButtonIcon/>
-                            </button>
-                          </div>
-                          <div className='botAscOrdenAdministrador'>
-                            <button onClick={() => {
-                                scrollPositionRef.current = 0;
-                                setOrdenacaoAsc(false)
-                              }}>
-                              <SortDescButtonIcon/>
-                            </button>
-                          </div>
-                        </div>
+                            setOrdenacaoAsc(true)
+                          }}>
+                          <SortAscButtonIcon/>
+                        </button>
                       </div>
-                      <div className='filtraAdministradores'>
-                        <small>Filtro</small>
-                        <select
-                          className='selOptionsAdministrador'
-                          id='selFiltroAdministrador'
-                          value={filtro}
-                          onChange={(e) => setFiltro(e.target.value)}
-                        >
-                          <option key='filtAdmin'     value='administrador'>Administrador</option>
-                          <option key='filtGrupo'     value='grupo'        >Grupo Econômico</option>
-                          <option key='filtCompanhia' value='companhia'    >Companhia</option>
-                          <option key='filtOrgao'     value='orgao'        >Órgão da Administração</option>
-                          <option key='filtCargo'     value='cargo'        >Cargo</option>
-                        </select>
-                        <div className='selFiltroAdministrador'>
-                          <select
-                            className='selOptionsAdministrador'
-                            id='selFiltroAdministrador'
-                            value={itemFiltro}
-                            onChange={(e) => setItemFiltro(e.target.value)}
-                          >
-                            {conteudoFiltro.map((item, index) => {
-                              return(<option key={item.uidFiltro} value={item.uidFiltro}>{item.nomeFiltro}</option>)
-                            })}
-                          </select>
-                        </div>
-                        <div className='botOrdenAdministrador'>
-                          <button onClick={filtraTabela}       >Aplicar</button>
-                          <button onClick={cancelaFiltroTabela}>Cancelar</button>
-                        </div>
+                      <div className='botAscOrdenAdministrador'>
+                        <button onClick={() => {
+                            scrollPositionRef.current = 0;
+                            setOrdenacaoAsc(false)
+                          }}>
+                          <SortDescButtonIcon/>
+                        </button>
                       </div>
                     </div>
                   </div>
-                  <div 
-                      className='containerDadosAdministradores'
-                      id='containerDadosAdministradores'>
+                  <div className='filtraAdministradores'>
+                    <small>Filtro</small>
+                    <select
+                      className='selOptionsAdministrador'
+                      id='selFiltroAdministrador'
+                      value={filtro}
+                      onChange={(e) => setFiltro(e.target.value)}
+                    >
+                      <option key='filtVazio'     value=''             >Selecione um filtro</option>
+                      <option key='filtAdmin'     value='administrador'>Administrador</option>
+                      <option key='filtGrupo'     value='grupo'        >Grupo Econômico</option>
+                      <option key='filtCompanhia' value='companhia'    >Companhia</option>
+                      <option key='filtOrgao'     value='orgao'        >Órgão da Administração</option>
+                      <option key='filtCargo'     value='cargo'        >Cargo</option>
+                    </select>
+                    <div className='selFiltroAdministrador'>
+                      <select
+                        className='selOptionsAdministrador'
+                        id='selItemFiltroAdministrador'
+                        value={itemFiltro}
+                        onChange={(e) => setItemFiltro(e.target.value)}
+                      >
+                        <option key='filtVazio'   value=''>
+                          {(filtro === '' ? 'Selecione um filtro acima' : 'Selecione um item a filtrar')}
+                        </option>
+                        {conteudoFiltro.map((item, index) => {
+                          return(<option key={item.uidFiltro} value={item.uidFiltro}>{item.nomeFiltro}</option>)
+                        })}
+                      </select>
+                    </div>
+                    <div className='botOrdenAdministrador'>
+                      {/*<button onClick={filtraTabela}       >Aplicar</button>*/}
+                      <button onClick={cancelaFiltroTabela}>Cancelar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div 
+                className='containerDadosAdministradores'
+                id='containerDadosAdministradores'>
+                { tabAdminExibicao.length === 0 ? (
+                  <>
+                    <div className='tabelaVazia'>
+                      <h4>Não há Administrador cadastrado para o filtro selecionado</h4>
+                    </div>
+                  </>
+                ) : (
+                  <>
                     {tabAdminExibicao.map((item, index) => {
                       return(
                         <div key={item.uidAdministrador.concat('admDivPrincipal')}
@@ -739,9 +728,9 @@ function Home() {
                         </div>
                       );
                     })}
-                  </div>
-                </>
-              )}
+                  </>
+                )}
+              </div>
             </>
           )}
         </>
