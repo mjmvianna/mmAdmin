@@ -158,7 +158,7 @@ function Home() {
         }
       );
     }
-  },[carregaAdministradores]);
+  },[tabAdministradores]);
   
   function fNomeAdministrador(uidPessoa) {
     const indPessoa = tabPessoas.findIndex((element) => element.uidPessoa === uidPessoa);
@@ -333,7 +333,7 @@ function Home() {
     
     const queryAdministradores = query(collectionAdministradores);
     const qDocs                = await getDocs(queryAdministradores);
-    const queryIsEmpty = qDocs.size === 0;
+    const queryIsEmpty         = qDocs.size === 0;
     
     if(!queryIsEmpty){
       let lista = [];
@@ -406,13 +406,7 @@ function Home() {
       } else if (filtro === 'cargo') {
         lista = tabAdministradores.filter(item => item.uidCargo===itemFiltro);
       }
-      // Testa se a tabela ficou vazia. Se ficou, exibe mensagem de erro e carrega a tabela completa
-      //if (lista.length !== 0) {
-        fOrdenaLista(lista);
-      //} else {
-      //  toast.error('Não há registro que satisfaça o filtro selecionado');
-      //  fOrdenaLista(tabAdministradores);
-      //}
+      fOrdenaLista(lista);
     }
   }
   
