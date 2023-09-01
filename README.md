@@ -1,70 +1,101 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# mmAdmin
+Cadastro auxiliar de administradores e outros colaboradores de companhias abertas. Utiliza somente dados públicos. Não apresenta informações pessoais sensíveis.
 
-## Available Scripts
+Pode ser utilizado por qualquer pessoa cadastrada.
 
-In the project directory, you can run:
+## Para criar o projeto:
+No diretório em que será criada a pasta do projeto
+(diretório acima da pasta do projeto):
+>npx create-react-app <nome do projeto> <enter>
 
-### `npm start`
+Serão criados pastas e arquivos para o projeto
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Usar nome do projeto em minúsculas sem caracteres especiais e nome curto
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Substituir o conteúdo das pastas /public e /src
 
-### `npm test`
+## Bibliotecas externas instaladas (npm install):
+>react-router-dom (rotas/links/paginação)
+>axios (requisições a APIs externas)
+>react-toastify (mensagens ao usuário)
+>react-icons (ícones estilizados)
+>firebase (firebase do Google)
+>date-fns (manipulação de datas)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Depois de instalar as bibliotecas:
+Substituir os arquivos:
+        .firebaserc
+        .gitignore
+        firebase.json
+        package.json
+        package-lock.json
+        README.md
 
-### `npm run build`
+## Autenticação
+Firebase Authenticator
+login por e-mail
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Base de dados
+Cloud Firestore
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Collections/Documents/Fields:
+	.usuarios
+		.UID do usuário no Firebase Authentication
+			.email: string
+			.nome: string
+			.status: string ('admin', 'master', 'consulta')
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+	.pessoas
+		.automatic
+			.apelidoPessoa: string
+			.nomePessoa: string
 
-### `npm run eject`
+	.grupos
+		.automatic
+			.nomeGrupo: string
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+	.companhias
+		.automatic
+			.grupoEconomico: string
+             (ID do document da collection grupos)
+			.razaoSocial: string
+			.shortName: string
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+	.orgaos
+		.automatic
+			.nomeOrgao: string
+			.siglaOrgao: string
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+	.cargos
+		.automatic
+			.nomeCargo: string
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+	.administradores
+		.automatic
+			.dtFimMandato: timestamp
+			.dtInicioMandato: timestamp
+			.uidCargo: string
+             (ID do document da collection cargos)
+			.uidCompanhia: string
+             (ID do document da collection companhias)
+			.uidOrgao: string
+             (ID do document da collection orgaos)
+			.uidPessoa: string
+             (ID do document da collection pessoas)
 
-## Learn More
+## Autor
+[@mjmvianna](https://www.github.com/mjmvianna)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Feedback
+Se você tiver algum feedback, por favor nos deixe saber por meio de mjmvianna69@gmail.com
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Instalação
+O projeto ainda está em desenvolvimento.
 
-### Analyzing the Bundle Size
+Recomenda-se aguardar a finalização para instalação.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Suporte
+Para suporte, mande um email para mjmvianna69@gmail.com.

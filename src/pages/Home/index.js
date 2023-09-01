@@ -17,7 +17,8 @@ import { EditButtonIcon, DeleteButtonIcon, SortAscButtonIcon, SortDescButtonIcon
 import IncAdministrador from '../../components/IncAdministrador';
 import AltAdministrador from '../../components/AltAdministrador';
 import ExcAdministrador from '../../components/ExcAdministrador';
-import { toast } from 'react-toastify';
+
+import Teste from './Teste';
 
 function Home() {
   const collectionAdministradores = collection(db, 'administradores');
@@ -39,6 +40,8 @@ function Home() {
   const [conteudoFiltro, setConteudoFiltro] = useState([]);
   const [itemFiltro    , setItemFiltro    ] = useState('');
   
+  const [chamaTeste    , setChamaTeste    ] = useState(false);
+
   const scrollPositionRef = useRef(0);
   
   // Carregar primeiro tabAdministradores, que será atualizada a cada
@@ -478,7 +481,7 @@ function Home() {
             <>
               <div className='headerAdministradores'>
                 <div className='headerTituloInclui'>
-                  <h3>Administradores</h3>
+                  {/*<h3>Administradores</h3>*/}
                   {userMaster && 
                   (<>
                     <button 
@@ -489,6 +492,12 @@ function Home() {
                       }}
                     >
                       Novo Registro
+                    </button>
+                    <button 
+                      className='botaoNovoAdministrador'
+                      onClick={() => setChamaTeste(!chamaTeste)}
+                    >
+                      Teste
                     </button>
                   </>)
                   }
@@ -569,6 +578,449 @@ function Home() {
                   </div>
                 </div>
               </div>
+              { chamaTeste ? (
+              <div
+                className='containerDadosAdministradores'>
+                <div key='divAdm1'
+                     className='adminDiv'>
+                  <strong key='adm1'
+                          className='info1PrimeiroNivel'
+                  >
+                    Nome Para Teste 1
+                  </strong>
+                  <div key='divGrupo1'
+                      className='admDados'>
+                    <span key='grupo1'
+                          className='info1SegundoNivel'>
+                      Grupo Americanas
+                    </span>
+                    <div key='divCompanhia1'
+                         className='adminDiv'>
+                      <span key='companhia1'
+                            className='info1TerceiroNivel'>
+                        Lojas Americanas S.A.
+                      </span>
+                      <div key='divOrgao1'
+                          className='adminPrimeiroNivel'>
+                        <span key='orgao1'
+                              className='info1QuintoNivel'>
+                          Conselho de Administração
+                        </span>
+                        <div key='divCargoo1'
+                          className='adminPrimeiroNivel'>
+                          <span key='cargo1'
+                                className='info1SextoNivel'>
+                            Membro Suplente
+                          </span>
+                          <div key='divMandato1'
+                            className='adminQuintoNivel'>
+                            <span key='mandatoInicio1'
+                                  className='info1SetimoNivel'>
+                              De 31/12/2009
+                            </span>
+                            <span key='mandatoFim1'
+                                  className='info2QuartoNivel'>
+                              a 30/04/2013
+                            </span>
+                          </div>
+                          <div key='divMandato1'
+                            className='adminQuintoNivel'>
+                            <span key='mandatoInicio1'
+                                  className='info1SetimoNivel'>
+                              De 10/04/2015
+                            </span>
+                            <span key='mandatoFim1'
+                                  className='info2QuartoNivel'>
+                              a 10/04/2017
+                            </span>
+                          </div>
+                          <div key='divMandato1'
+                            className='adminQuintoNivel'>
+                            <span key='mandatoInicio1'
+                                  className='info1SetimoNivel'>
+                              De 10/04/2019
+                            </span>
+                            <span key='mandatoFim1'
+                                  className='info2QuartoNivel'>
+                              a 10/04/2021
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div key='divAdm1'
+                     className='adminDiv'>
+                  <strong key='adm1'
+                          className='info1PrimeiroNivel'
+                  >
+                    Nome Para Teste 2
+                  </strong>
+                  <div key='divGrupo1'
+                      className='admDados'>
+                    <span key='grupo1'
+                          className='info1SegundoNivel'>
+                      Grupo Americanas
+                    </span>
+                    <div key='divCompanhia1'
+                         className='adminDiv'>
+                      <span key='companhia1'
+                            className='info1TerceiroNivel'>
+                        Americanas S.A.
+                      </span>
+                      <div key='divOrgao1'
+                          className='adminPrimeiroNivel'>
+                        <span key='orgao1'
+                              className='info1QuintoNivel'>
+                          Conselho Fiscal
+                        </span>
+                        <div key='divCargoo1'
+                          className='adminPrimeiroNivel'>
+                          <span key='cargo1'
+                                className='info1SextoNivel'>
+                            Membro Suplente
+                          </span>
+                          <div key='divMandato1'
+                            className='adminQuintoNivel'>
+                            <span key='mandatoInicio1'
+                                  className='info1SetimoNivel'>
+                              De 29/04/2022
+                            </span>
+                            <span key='mandatoFim1'
+                                  className='info2QuartoNivel'>
+                              a 
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div key='divCompanhia1'
+                         className='adminDiv'>
+                      <span key='companhia1'
+                            className='info1TerceiroNivel'>
+                        Lojas Americanas S.A.
+                      </span>
+                      <div key='divOrgao1'
+                          className='adminPrimeiroNivel'>
+                        <span key='orgao1'
+                              className='info1QuintoNivel'>
+                          Conselho Fiscal
+                        </span>
+                        <div key='divCargoo1'
+                          className='adminPrimeiroNivel'>
+                          <span key='cargo1'
+                                className='info1SextoNivel'>
+                            Membro Suplente
+                          </span>
+                          <div key='divMandato1'
+                            className='adminQuintoNivel'>
+                            <span key='mandatoInicio1'
+                                  className='info1SetimoNivel'>
+                              De 30/04/2010
+                            </span>
+                            <span key='mandatoFim1'
+                                  className='info2QuartoNivel'>
+                              a 10/12/2021
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div key='divAdm1'
+                     className='adminDiv'>
+                  <strong key='adm1'
+                          className='info1PrimeiroNivel'
+                  >
+                    Nome Para Teste 3
+                  </strong>
+                  <div key='divGrupo1'
+                      className='admDados'>
+                    <span key='grupo1'
+                          className='info1SegundoNivel'>
+                      Grupo Americanas
+                    </span>
+                    <div key='divCompanhia1'
+                         className='adminDiv'>
+                      <span key='companhia1'
+                            className='info1TerceiroNivel'>
+                        Americanas S.A.
+                      </span>
+                      <div key='divOrgao1'
+                          className='adminPrimeiroNivel'>
+                        <span key='orgao1'
+                              className='info1QuintoNivel'>
+                          Comitê Ame
+                        </span>
+                        <div key='divCargoo1'
+                          className='adminPrimeiroNivel'>
+                          <span key='cargo1'
+                                className='info1SextoNivel'>
+                            Membro Efetivo
+                          </span>
+                          <div key='divMandato1'
+                            className='adminQuintoNivel'>
+                            <span key='mandatoInicio1'
+                                  className='info1SetimoNivel'>
+                              De 20/04/2011
+                            </span>
+                            <span key='mandatoFim1'
+                                  className='info2QuartoNivel'>
+                              a 20/04/2013
+                            </span>
+                          </div>
+                          <div key='divMandato1'
+                            className='adminQuintoNivel'>
+                            <span key='mandatoInicio1'
+                                  className='info1SetimoNivel'>
+                              De 10/06/2021
+                            </span>
+                            <span key='mandatoFim1'
+                                  className='info2QuartoNivel'>
+                              a 25/04/2023
+                            </span>
+                          </div>
+                        </div>
+                        <div key='divCargoo1'
+                          className='adminPrimeiroNivel'>
+                          <span key='cargo1'
+                                className='info1SextoNivel'>
+                            Presidente
+                          </span>
+                          <div key='divMandato1'
+                            className='adminQuintoNivel'>
+                            <span key='mandatoInicio1'
+                                  className='info1SetimoNivel'>
+                              De 10/06/2021
+                            </span>
+                            <span key='mandatoFim1'
+                                  className='info2QuartoNivel'>
+                              a 25/04/2023
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div key='divOrgao1'
+                          className='adminPrimeiroNivel'>
+                        <span key='orgao1'
+                              className='info1QuintoNivel'>
+                          Comitê de Gente e Sustentabilidade
+                        </span>
+                        <div key='divCargoo1'
+                          className='adminPrimeiroNivel'>
+                          <span key='cargo1'
+                                className='info1SextoNivel'>
+                            Membro Efetivo
+                          </span>
+                          <div key='divMandato1'
+                            className='adminQuintoNivel'>
+                            <span key='mandatoInicio1'
+                                  className='info1SetimoNivel'>
+                              De 09/06/2021
+                            </span>
+                            <span key='mandatoFim1'
+                                  className='info2QuartoNivel'>
+                              a 
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div key='divOrgao1'
+                          className='adminPrimeiroNivel'>
+                        <span key='orgao1'
+                              className='info1QuintoNivel'>
+                          Comitê de Nomeação
+                        </span>
+                        <div key='divCargoo1'
+                          className='adminPrimeiroNivel'>
+                          <span key='cargo1'
+                                className='info1SextoNivel'>
+                            Presidente
+                          </span>
+                          <div key='divMandato1'
+                            className='adminQuintoNivel'>
+                            <span key='mandatoInicio1'
+                                  className='info1SetimoNivel'>
+                              De 10/06/2021
+                            </span>
+                            <span key='mandatoFim1'
+                                  className='info2QuartoNivel'>
+                              a 
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div key='divOrgao1'
+                          className='adminPrimeiroNivel'>
+                        <span key='orgao1'
+                              className='info1QuintoNivel'>
+                          Comitê Financeiro
+                        </span>
+                        <div key='divCargoo1'
+                          className='adminPrimeiroNivel'>
+                          <span key='cargo1'
+                                className='info1SextoNivel'>
+                            Membro Efetivo
+                          </span>
+                          <div key='divMandato1'
+                            className='adminQuintoNivel'>
+                            <span key='mandatoInicio1'
+                                  className='info1SetimoNivel'>
+                              De 11/05/2023
+                            </span>
+                            <span key='mandatoFim1'
+                                  className='info2QuartoNivel'>
+                              a 
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div key='divOrgao1'
+                          className='adminPrimeiroNivel'>
+                        <span key='orgao1'
+                              className='info1QuintoNivel'>
+                          Conselho de Administração
+                        </span>
+                        <div key='divCargoo1'
+                          className='adminPrimeiroNivel'>
+                          <span key='cargo1'
+                                className='info1SextoNivel'>
+                            Membro Efetivo
+                          </span>
+                          <div key='divMandato1'
+                            className='adminQuintoNivel'>
+                            <span key='mandatoInicio1'
+                                  className='info1SetimoNivel'>
+                              De 10/06/2021
+                            </span>
+                            <span key='mandatoFim1'
+                                  className='info2QuartoNivel'>
+                              a 
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div key='divCompanhia1'
+                         className='adminDiv'>
+                      <span key='companhia1'
+                            className='info1TerceiroNivel'>
+                        B2W Comércio Digital S.A.
+                      </span>
+                      <div key='divOrgao1'
+                          className='adminPrimeiroNivel'>
+                        <span key='orgao1'
+                              className='info1QuintoNivel'>
+                          Comitê de Nomeação
+                        </span>
+                        <div key='divCargoo1'
+                          className='adminPrimeiroNivel'>
+                          <span key='cargo1'
+                                className='info1SextoNivel'>
+                            Membro Efetivo
+                          </span>
+                          <div key='divMandato1'
+                            className='adminQuintoNivel'>
+                            <span key='mandatoInicio1'
+                                  className='info1SetimoNivel'>
+                              De 25/04/2009
+                            </span>
+                            <span key='mandatoFim1'
+                                  className='info2QuartoNivel'>
+                              a 30/04/2011
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div key='divOrgao1'
+                          className='adminPrimeiroNivel'>
+                        <span key='orgao1'
+                              className='info1QuintoNivel'>
+                          Conselho de Administração
+                        </span>
+                        <div key='divCargoo1'
+                          className='adminPrimeiroNivel'>
+                          <span key='cargo1'
+                                className='info1SextoNivel'>
+                            Membro Efetivo
+                          </span>
+                          <div key='divMandato1'
+                            className='adminQuintoNivel'>
+                            <span key='mandatoInicio1'
+                                  className='info1SetimoNivel'>
+                              De 25/04/2009
+                            </span>
+                            <span key='mandatoFim1'
+                                  className='info2QuartoNivel'>
+                              a 30/04/2011
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div key='divCompanhia1'
+                         className='adminDiv'>
+                      <span key='companhia1'
+                            className='info1TerceiroNivel'>
+                        Lojas Americanas S.A.
+                      </span>
+                      <div key='divOrgao1'
+                          className='adminPrimeiroNivel'>
+                        <span key='orgao1'
+                              className='info1QuintoNivel'>
+                          Conselho de Administraçao
+                        </span>
+                        <div key='divCargoo1'
+                          className='adminPrimeiroNivel'>
+                          <span key='cargo1'
+                                className='info1SextoNivel'>
+                            Membro Efetivo
+                          </span>
+                          <div key='divMandato1'
+                            className='adminQuintoNivel'>
+                            <span key='mandatoInicio1'
+                                  className='info1SetimoNivel'>
+                              De 31/12/1999
+                            </span>
+                            <span key='mandatoFim1'
+                                  className='info2QuartoNivel'>
+                              a 10/12/2021
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div key='divOrgao1'
+                          className='adminPrimeiroNivel'>
+                        <span key='orgao1'
+                              className='info1QuintoNivel'>
+                          Conselho de Administraçao
+                        </span>
+                        <div key='divCargoo1'
+                          className='adminPrimeiroNivel'>
+                          <span key='cargo1'
+                                className='info1SextoNivel'>
+                            Presidente
+                          </span>
+                          <div key='divMandato1'
+                            className='adminQuintoNivel'>
+                            <span key='mandatoInicio1'
+                                  className='info1SetimoNivel'>
+                              De 31/10/2017
+                            </span>
+                            <span key='mandatoFim1'
+                                  className='info2QuartoNivel'>
+                              a 30/10/2020
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              ) : (
               <div 
                 className='containerDadosAdministradores'
                 id='containerDadosAdministradores'>
@@ -725,6 +1177,7 @@ function Home() {
                   </>
                 )}
               </div>
+              )}
             </>
           )}
         </>

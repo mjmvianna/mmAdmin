@@ -279,6 +279,37 @@
   padding: 0;
 }
 
+.adminQuintoNivel {
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding: 0;
+  padding-bottom: 5px;
+  padding-left: 4px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  font-size: 0.92rem;
+}
+
+.info1QuintoNivel {
+  margin: 0;
+  margin-left: 45px;
+  padding: 0;
+}
+
+.info1SextoNivel {
+  margin: 0;
+  margin-left: 60px;
+  padding: 0;
+}
+
+.info1SetimoNivel {
+  margin: 0;
+  margin-left: 75px;
+  padding: 0;
+}
+
 @media screen and (max-width:580px) {
   .selOptionsAdministrador {
     width: 150px;
@@ -336,6 +367,13 @@
     align-items: flex-start;
   }
   
+  .adminQuintoNivel {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
   .info2QuartoNivel {
     margin-left: 5px;
   }
