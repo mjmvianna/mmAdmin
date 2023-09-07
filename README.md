@@ -1,8 +1,20 @@
-
 # mmAdmin
-Cadastro auxiliar de administradores e outros colaboradores de companhias abertas. Utiliza somente dados públicos. Não apresenta informações pessoais sensíveis.
+Cadastro auxiliar de administradores e outros colaboradores de companhias abertas. 
+Utiliza somente dados públicos. Não apresenta informações pessoais sensíveis.
 
-Pode ser utilizado por qualquer pessoa cadastrada.
+Pode ser utilizado por qualquer pessoa cadastrada. (julho/2023)
+
+O projeto nasceu para concentrar informações a respeito de administradores estatutários
+de companhias abertas registradas na CVM, conforme designados por Assembleias de 
+Acionistas e Conselhos de Administração. Entretanto, devido à facilidade de 
+cadastramento e consultas, outras pessoas ligadas às companhias começaram a ser 
+incluídas e consultadas, mesmo que não estatutárias. Esse acréscimo gerou a 
+necessidade de adaptação do app, ainda não implementadas. (agosto/2023)
+
+Da mesma forma, a multiplicidade de registros relativos a pessoas individuais gerou a
+necessidade de alteração da forma de exibição dos dados, que está em implementação.
+(setembro 2023)
+
 
 ## Para criar o projeto:
 No diretório em que será criada a pasta do projeto

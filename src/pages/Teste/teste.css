@@ -1,0 +1,287 @@
+.containerHomeTeste {
+  background-color: #1c1c1c; /* Fundo quase preto */;
+  height: calc(100vh - 50px);
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 0.95rem;
+}
+
+.containerHomeTeste h3 {
+  padding: 17px 0 0 0;
+  color:aliceblue;
+}
+
+.containerHomeTeste li {
+  color: whitesmoke;
+  font-size: 0.9rem;
+  margin-bottom: 2px;
+}
+
+.tabelaVaziaTeste {
+  height: calc(70vh - 50px);
+  margin: 0;
+  padding: 0;
+  color:aliceblue;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.tabelaVaziaTeste h3, h4 {
+  color:aliceblue;
+}
+
+.botaoNovoAdministradorTeste {
+  margin: 10px 5px 5px 5px;
+  padding: 5px 16px;
+  background-color: lightgrey;
+  color:#1c1c1c;
+  font-size: 1rem;
+  border:none;
+  border-radius: 5px;
+  cursor:pointer;
+}
+
+.headerAdministradoresTeste {
+  width: 100%;
+  padding: 5px;
+  padding-top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.headerTituloIncluiTeste {
+  width: 100%;
+  padding: 5px;
+  padding-top: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.headerTituloIncluiTeste h3 {
+  margin-right: 10px;
+}
+
+.headerTituloIncluiTeste button {
+  margin-left: 10px;
+}
+
+.headerBoxesTeste {
+  width: 100%;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content:space-around;
+  align-items: center;
+}
+
+.selOptionsAdministradorTeste {
+  width: 168px;
+}
+
+.OrdenAdministradoresTeste{
+  padding-top: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  color: aliceblue;
+}
+
+.botOrdenAdministradorTeste {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: space-between;
+}
+
+.botAscOrdenAdministradorTeste {
+  background-color: lightgrey;
+  margin: 5px 10px 0 10px;
+  border-radius: 5px;
+}
+
+.filtraAdministradoresTeste {
+  padding-top: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  color: aliceblue;
+}
+
+.filtraAdministradoresTeste button {
+  margin: 0 5px;
+  padding: 4px 8px;
+  background-color: lightgrey;
+  color:#1c1c1c;
+  border:none;
+  border-radius: 5px;
+  cursor:pointer;
+}
+
+.selFiltroAdministradorTeste {
+  width: 100%;
+  padding: 5px 0;
+}
+
+.containerDadosAdministradoresTeste {
+  background-color: #1c1c1c; /* Fundo quase preto */;
+  width: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.admDivPrincipalTeste {
+  background-color: lightgrey;
+  display: flex;
+  flex-direction: row;
+}
+
+.botoesAdministradorTeste {
+  background-color: lightgrey;
+  margin: 0;
+  padding: 0;
+  padding-right: 2px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.botaoAcaoAdminTeste {
+  margin: 0 2px;
+  padding: 2px 5px;
+  background-color: white;
+  color:#1c1c1c;
+  font-size: 14px;
+  border:none;
+  border-radius: 5px;
+  cursor:pointer;
+}
+
+.botaoAcaoAdminTeste:hover {
+  background-color: #999999;
+}
+
+.botaoPlusMinusTeste {
+  margin: 2px;
+  padding: 3px 5px 0 5px;
+  background-color: white;
+  color:#1c1c1c;
+  font-size: 14px;
+  border:none;
+  border-radius: 5px;
+  cursor:pointer;
+}
+
+.botaoPlusMinusTeste:hover {
+  background-color: #999999;
+}
+
+.adminPrimeiroNivelTeste {
+  width: 88vw;
+  margin: 0;
+  margin-top: 5px;
+  border-bottom: 1px solid black;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  font-size: 0.95rem;
+}
+
+.adminNivelExibe {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.info1PrimeiroNivelTeste {
+  margin: 0;
+  padding: 0;
+  padding-left: 3px;
+}
+
+.adminSegundoNivelTeste {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.info1SegundoNivelTeste {
+  margin: 0;
+  margin-left: 15px;
+  padding: 0;
+}
+
+.info1TerceiroNivelTeste {
+  margin: 0;
+  margin-left: 30px;
+  padding: 0;
+}
+
+.info1QuartoNivelTeste {
+  margin: 0;
+  margin-left: 45px;
+  padding: 0;
+}
+
+.info1QuintoNivelTeste {
+  margin: 0;
+  margin-left: 60px;
+  padding: 0;
+}
+
+.adminSextoNivelTeste {
+  width: 100%;
+  padding: 0;
+  padding-bottom: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.92rem;
+}
+
+.info1SextoNivelTeste {
+  margin: 0;
+  margin-left: 75px;
+  padding: 0;
+}
+
+@media screen and (max-width:580px) {
+  .selOptionsAdministradorTeste {
+    width: 150px;
+  }
+}
+
+@media screen and (max-width:519px) {
+  .containerHomeTeste h3 {
+    font-size: 0.97rem;
+  }
+  
+  .botaoNovoAdministradorTeste {
+    font-size: 0.87rem;
+  }
+    
+}

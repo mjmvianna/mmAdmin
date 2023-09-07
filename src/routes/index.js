@@ -4,6 +4,7 @@ import Private     from '../components/Private';
 import Admin       from '../components/Admin';
 import Login       from '../pages/Login';
 import Home        from '../pages/Home';
+import Teste       from '../pages/Teste';
 import Usuarios    from '../pages/Usuarios';
 import NovoUsuario from '../pages/NovoUsuario';
 import Grupos      from '../pages/Grupos';
@@ -19,6 +20,7 @@ function RoutesApp(){
     <Routes>
       <Route path='/'            element={ <Login/> } />
       <Route path='/Home'        element={ <Private><Home/></Private> } />
+      <Route path='/Teste'       element={ <Admin><Teste/></Admin> } />
       <Route path='/Usuarios'    element={ <Admin><Usuarios/></Admin> } />
       <Route path='/NovoUsuario' element={ <NovoUsuario/> } />
       <Route path='/Grupos'      element={ <Private><Grupos/></Private> } />

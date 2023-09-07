@@ -1,6 +1,6 @@
 import { BiEditAlt } from 'react-icons/bi';
 import { FcAlphabeticalSortingAz, FcAlphabeticalSortingZa } from 'react-icons/fc';
-import { FiTrash2, FiPlus } from 'react-icons/fi';
+import { FiTrash2, FiMinus, FiPlus } from 'react-icons/fi';
 
 export function EditButtonIcon() {
   //return <FiEdit size={17}/>;
@@ -22,4 +22,12 @@ export function SortAscButtonIcon() {
 
 export function SortDescButtonIcon() {
   return <FcAlphabeticalSortingZa size={17}/>;
+}
+
+export function PlusButtonIcon() {
+  return <FiPlus size={13}/>;
+}
+
+export function MinusButtonIcon() {
+  return <FiMinus size={13}/>;
 }
