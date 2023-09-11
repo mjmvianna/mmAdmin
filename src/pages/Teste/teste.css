@@ -78,10 +78,11 @@
 
 .headerBoxesTeste {
   width: 100%;
+  max-width: 800px;
   padding: 0;
   display: flex;
   flex-direction: row;
-  justify-content:space-around;
+  justify-content: space-around;
   align-items: center;
 }
 
@@ -148,6 +149,7 @@
 
 .admDivPrincipalTeste {
   background-color: lightgrey;
+  max-width: 750px;
   display: flex;
   flex-direction: row;
 }

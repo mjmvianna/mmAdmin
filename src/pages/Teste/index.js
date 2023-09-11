@@ -6,7 +6,11 @@
 // -ENCONTRAR SOLUÇÃO PARA NOVO LEIAUTE - OK
 // -PROGRAMAR TESTE PARA VERIFICAR NOVO LEIAUTE - OK
 // -PROGRAMAR CARGA DOS DADOS DO BANCO DE DADOS - OK
-// -ENCONTRAR SOLUÇÃO PARA ORDENAÇÃO/FILTRO
+// -PROGRAMAR ORDENAÇÃO - OK
+// -PROGRAMAR FILTRO - OK
+// -PROGRAMAR ALTERAÇÃO
+// -PROGRAMAR EXCLUSÃO
+
 
 import './teste.css';
 
@@ -163,6 +167,13 @@ function Teste() {
   
   useEffect(() => {
     filtraTabela();
+  },[tabAdministradores]);
+  
+  useEffect(() => {
+    fetchTabAdmExibicao();
+  }, [tabAdminSelect]);
+  
+  useEffect(() => {
     if (document.getElementById("containerDadosAdministradores")) {
       const scrollVar = scrollPositionRef.current;
       document.getElementById("containerDadosAdministradores").scrollTo(
@@ -172,18 +183,8 @@ function Teste() {
         }
       );
     }
-  },[tabAdministradores]);
+  }, [tabAdminExibicao]);
   
-  useEffect(() => {
-    try {
-      fetchTabAdmExibicao();
-    }
-    catch {
-      console.error('Erro fetching tabela para exibição');
-    }
-    
-  }, [tabAdminSelect]);
-
   function fNomeAdministrador(uidPessoa) {
     const indPessoa = tabPessoas.findIndex((element) => element.uidPessoa === uidPessoa);
     if (indPessoa !== -1) {
@@ -304,19 +305,15 @@ function Teste() {
         
         let   sortField            = nomeAdministrador;
         if (ordenacao === 'administrador') {
-          sortField = nomeAdministrador.concat(shortNameCompanhia).concat(nomeOrgao);
+          sortField = nomeAdministrador.concat(razaoSocialCompanhia).concat(nomeOrgao);
         } else if (ordenacao === 'grupo') {
-          sortField = nomeGrupoEconomico.concat(shortNameCompanhia).concat(nomeOrgao);
+          sortField = nomeGrupoEconomico.concat(razaoSocialCompanhia).concat(nomeOrgao);
         } else if (ordenacao === 'companhia') {
           sortField = razaoSocialCompanhia.concat(nomeAdministrador).concat(nomeOrgao);
         } else if (ordenacao === 'orgao') {
           sortField = nomeOrgao.concat(nomeCargo).concat(nomeAdministrador);
         } else if (ordenacao === 'cargo' ) {
-          sortField = nomeCargo.concat(shortNameCompanhia).concat(nomeAdministrador);
-        //} else if (ordenacao === 'inicioMandato') {
-        //  sortField = anoInicioMandato.concat(mesInicioMandato).concat(diaInicioMandato).concat(nomeAdministrador).concat(shortNameCompanhia);
-        //} else if (ordenacao === 'fimMandato') {
-        //  sortField = anoFimMandato.concat(mesFimMandato).concat(diaFimMandato).concat(nomeAdministrador).concat(shortNameCompanhia);
+          sortField = nomeCargo.concat(nomeOrgao).concat(razaoSocialCompanhia).concat(anoInicioMandato).concat(mesInicioMandato).concat(diaInicioMandato); //concat(nomeAdministrador);
         }
         
         listaOrdenada.push({
@@ -441,6 +438,25 @@ function Teste() {
   }
   
   function fetchTabAdmExibicao() {
+    switch (ordenacao) {
+      case 'administrador':
+        fetchTabAdmAdministradores();
+        break;
+      case 'grupo':
+        fetchTabAdmGrupo();
+        break;
+      case 'companhia':
+        fetchTabAdmCompanhia();
+        break;
+      case 'orgao':
+        fetchTabAdmOrgao();
+        break;
+      case 'cargo':
+        fetchTabAdmCargo();
+    }
+  }
+  
+  function fetchTabAdmAdministradores() {
     const dadosParaExibicao = [];
     let i=0;
     while (i<tabAdminSelect.length) {
@@ -482,10 +498,9 @@ function Teste() {
                 vetorNivel5.push({
                   campoExibicao6: 'De ' + tabAdminSelect[i].dtInicioFormatted + ' a ' + tabAdminSelect[i].dtFimFormatted,
                 });
-                console.log('campos: ' + campo1 + '/' + campo2 + '/' + campo3 + '/' + campo4 + '/' + campo5 + '/' + tabAdminSelect[i].dtInicioFormatted + '/' + tabAdminSelect[i].dtFimFormatted);
                 i++;
               }
-
+              
               vetorNivel4.push({
                 campoExibicao5: campo5,
                 exibeExibicao5: true,
@@ -499,16 +514,344 @@ function Teste() {
               vetorExibicao4: vetorNivel4,
             });
           }
-           
+          
           vetorNivel2.push({
             campoExibicao3: campo3,
             exibeExibicao3: true,
             vetorExibicao3: vetorNivel3,
           });
         }
-         
+        
         vetorNivel1.push({
           campoExibicao2: 'Grupo ' + campo2,
+          exibeExibicao2: true,
+          vetorExibicao2: vetorNivel2,
+        });
+      }
+      
+      dadosParaExibicao.push({
+        campoExibicao1: campo1,
+        exibeExibicao1: true,
+        vetorExibicao1: vetorNivel1,
+      });
+    }
+    setTabAdminExibicao(dadosParaExibicao);
+  }
+  
+  function fetchTabAdmGrupo() {
+    const dadosParaExibicao = [];
+    let i=0;
+    while (i<tabAdminSelect.length) {
+      const campo1 = tabAdminSelect[i].nomeGrupoEconomico;
+      
+      const vetorNivel1 = [];
+      while (i<tabAdminSelect.length && 
+            (campo1 === tabAdminSelect[i].nomeGrupoEconomico)) {
+        const campo2 = tabAdminSelect[i].razaoSocialCompanhia;
+        
+        const vetorNivel2 = [];
+        while (i<tabAdminSelect.length && 
+              (campo1 === tabAdminSelect[i].nomeGrupoEconomico &&
+               campo2 === tabAdminSelect[i].razaoSocialCompanhia)) {
+          const campo3 = tabAdminSelect[i].nomeOrgao;
+        
+          const vetorNivel3 = [];
+          while (i<tabAdminSelect.length && 
+                (campo1 === tabAdminSelect[i].nomeGrupoEconomico   &&
+                 campo2 === tabAdminSelect[i].razaoSocialCompanhia &&
+                 campo3 === tabAdminSelect[i].nomeOrgao)) {
+            const campo4 = tabAdminSelect[i].nomeCargo;
+            
+            const vetorNivel4 = [];
+            while (i<tabAdminSelect.length && 
+                  (campo1 === tabAdminSelect[i].nomeGrupoEconomico   &&
+                   campo2 === tabAdminSelect[i].razaoSocialCompanhia &&
+                   campo3 === tabAdminSelect[i].nomeOrgao            && 
+                   campo4 === tabAdminSelect[i].nomeCargo)) {
+              const campo5 = tabAdminSelect[i].nomeAdministrador;
+              
+              const vetorNivel5 = [];
+              while (i<tabAdminSelect.length && 
+                    (campo1 === tabAdminSelect[i].nomeGrupoEconomico   &&
+                     campo2 === tabAdminSelect[i].razaoSocialCompanhia &&
+                     campo3 === tabAdminSelect[i].nomeOrgao            && 
+                     campo4 === tabAdminSelect[i].nomeCargo            &&
+                     campo5 === tabAdminSelect[i].nomeAdministrador)) {
+               vetorNivel5.push({
+                  campoExibicao6: 'De ' + tabAdminSelect[i].dtInicioFormatted + ' a ' + tabAdminSelect[i].dtFimFormatted,
+                });
+                i++;
+              }
+              
+              vetorNivel4.push({
+                campoExibicao5: campo5,
+                exibeExibicao5: true,
+                vetorExibicao5: vetorNivel5,
+              });
+            }
+            
+            vetorNivel3.push({
+              campoExibicao4: campo4,
+              exibeExibicao4: true,
+              vetorExibicao4: vetorNivel4,
+            });
+          }
+          
+          vetorNivel2.push({
+            campoExibicao3: campo3,
+            exibeExibicao3: true,
+            vetorExibicao3: vetorNivel3,
+          });
+        }
+        
+        vetorNivel1.push({
+          campoExibicao2: campo2,
+          exibeExibicao2: true,
+          vetorExibicao2: vetorNivel2,
+        });
+      }
+      
+      dadosParaExibicao.push({
+        campoExibicao1: 'Grupo ' + campo1,
+        exibeExibicao1: true,
+        vetorExibicao1: vetorNivel1,
+      });
+    }
+    setTabAdminExibicao(dadosParaExibicao);
+  }
+  
+  function fetchTabAdmCompanhia() {
+    const dadosParaExibicao = [];
+    let i=0;
+    while (i<tabAdminSelect.length) {
+      const campo1 = tabAdminSelect[i].razaoSocialCompanhia;
+      
+      const vetorNivel1 = [];
+      while (i<tabAdminSelect.length && 
+            (campo1 === tabAdminSelect[i].razaoSocialCompanhia)) {
+        const campo2 = tabAdminSelect[i].nomeGrupoEconomico;
+
+        const vetorNivel2 = [];
+        while (i<tabAdminSelect.length && 
+              (campo1 === tabAdminSelect[i].razaoSocialCompanhia &&
+               campo2 === tabAdminSelect[i].nomeGrupoEconomico)) {
+          const campo3 = tabAdminSelect[i].nomeAdministrador;
+        
+          const vetorNivel3 = [];
+          while (i<tabAdminSelect.length && 
+                (campo1 === tabAdminSelect[i].razaoSocialCompanhia &&
+                 campo2 === tabAdminSelect[i].nomeGrupoEconomico   &&
+                 campo3 === tabAdminSelect[i].nomeAdministrador)) {
+            const campo4 = tabAdminSelect[i].nomeOrgao;
+
+            const vetorNivel4 = [];
+            while (i<tabAdminSelect.length && 
+                  (campo1 === tabAdminSelect[i].razaoSocialCompanhia &&
+                   campo2 === tabAdminSelect[i].nomeGrupoEconomico   &&
+                   campo3 === tabAdminSelect[i].nomeAdministrador    && 
+                   campo4 === tabAdminSelect[i].nomeOrgao)) {
+              const campo5 = tabAdminSelect[i].nomeCargo;
+              
+              const vetorNivel5 = [];
+              while (i<tabAdminSelect.length && 
+                    (campo1 === tabAdminSelect[i].razaoSocialCompanhia &&
+                     campo2 === tabAdminSelect[i].nomeGrupoEconomico   &&
+                     campo3 === tabAdminSelect[i].nomeAdministrador    && 
+                     campo4 === tabAdminSelect[i].nomeOrgao            &&
+                     campo5 === tabAdminSelect[i].nomeCargo)) {
+               vetorNivel5.push({
+                  campoExibicao6: 'De ' + tabAdminSelect[i].dtInicioFormatted + ' a ' + tabAdminSelect[i].dtFimFormatted,
+                });
+                i++;
+              }
+              
+              vetorNivel4.push({
+                campoExibicao5: campo5,
+                exibeExibicao5: true,
+                vetorExibicao5: vetorNivel5,
+              });
+            }
+            
+            vetorNivel3.push({
+              campoExibicao4: campo4,
+              exibeExibicao4: true,
+              vetorExibicao4: vetorNivel4,
+            });
+          }
+          
+          vetorNivel2.push({
+            campoExibicao3: campo3,
+            exibeExibicao3: true,
+            vetorExibicao3: vetorNivel3,
+          });
+        }
+        
+        vetorNivel1.push({
+          campoExibicao2: 'Grupo ' + campo2,
+          exibeExibicao2: true,
+          vetorExibicao2: vetorNivel2,
+        });
+      }
+      
+      dadosParaExibicao.push({
+        campoExibicao1: campo1,
+        exibeExibicao1: true,
+        vetorExibicao1: vetorNivel1,
+      });
+    }
+    setTabAdminExibicao(dadosParaExibicao);
+  }
+  
+  function fetchTabAdmOrgao() {
+    const dadosParaExibicao = [];
+    let i=0;
+    while (i<tabAdminSelect.length) {
+      const campo1 = tabAdminSelect[i].nomeOrgao;
+      
+      const vetorNivel1 = [];
+      while (i<tabAdminSelect.length && 
+            (campo1 === tabAdminSelect[i].nomeOrgao)) {
+        const campo2 = tabAdminSelect[i].nomeCargo;
+
+        const vetorNivel2 = [];
+        while (i<tabAdminSelect.length && 
+              (campo1 === tabAdminSelect[i].nomeOrgao &&
+               campo2 === tabAdminSelect[i].nomeCargo)) {
+          const campo3 = tabAdminSelect[i].nomeAdministrador;
+        
+          const vetorNivel3 = [];
+          while (i<tabAdminSelect.length && 
+                (campo1 === tabAdminSelect[i].nomeOrgao &&
+                 campo2 === tabAdminSelect[i].nomeCargo &&
+                 campo3 === tabAdminSelect[i].nomeAdministrador)) {
+            const campo4 = tabAdminSelect[i].razaoSocialCompanhia;
+    
+            const vetorNivel4 = [];
+            while (i<tabAdminSelect.length && 
+                  (campo1 === tabAdminSelect[i].nomeOrgao         &&
+                   campo2 === tabAdminSelect[i].nomeCargo         &&
+                   campo3 === tabAdminSelect[i].nomeAdministrador && 
+                   campo4 === tabAdminSelect[i].razaoSocialCompanhia)) {
+              const campo5 = tabAdminSelect[i].nomeGrupoEconomico;
+              
+              const vetorNivel5 = [];
+              while (i<tabAdminSelect.length && 
+                    (campo1 === tabAdminSelect[i].nomeOrgao            &&
+                     campo2 === tabAdminSelect[i].nomeCargo            &&
+                     campo3 === tabAdminSelect[i].nomeAdministrador    && 
+                     campo4 === tabAdminSelect[i].razaoSocialCompanhia &&
+                     campo5 === tabAdminSelect[i].nomeGrupoEconomico)) {
+               vetorNivel5.push({
+                  campoExibicao6: 'De ' + tabAdminSelect[i].dtInicioFormatted + ' a ' + tabAdminSelect[i].dtFimFormatted,
+                });
+                i++;
+              }
+              
+              vetorNivel4.push({
+                campoExibicao5: 'Grupo ' + campo5,
+                exibeExibicao5: true,
+                vetorExibicao5: vetorNivel5,
+              });
+            }
+            
+            vetorNivel3.push({
+              campoExibicao4: campo4,
+              exibeExibicao4: true,
+              vetorExibicao4: vetorNivel4,
+            });
+          }
+          
+          vetorNivel2.push({
+            campoExibicao3: campo3,
+            exibeExibicao3: true,
+            vetorExibicao3: vetorNivel3,
+          });
+        }
+        
+        vetorNivel1.push({
+          campoExibicao2: campo2,
+          exibeExibicao2: true,
+          vetorExibicao2: vetorNivel2,
+        });
+      }
+      
+      dadosParaExibicao.push({
+        campoExibicao1: campo1,
+        exibeExibicao1: true,
+        vetorExibicao1: vetorNivel1,
+      });
+    }
+    setTabAdminExibicao(dadosParaExibicao);
+  }
+  
+  function fetchTabAdmCargo() {
+    const dadosParaExibicao = [];
+    let i=0;
+    while (i<tabAdminSelect.length) {
+      const campo1 = tabAdminSelect[i].nomeCargo;
+      
+      const vetorNivel1 = [];
+      while (i<tabAdminSelect.length && 
+            (campo1 === tabAdminSelect[i].nomeCargo)) {
+        const campo2 = tabAdminSelect[i].nomeOrgao;
+
+        const vetorNivel2 = [];
+        while (i<tabAdminSelect.length && 
+              (campo1 === tabAdminSelect[i].nomeCargo &&
+               campo2 === tabAdminSelect[i].nomeOrgao)) {
+          const campo3 = tabAdminSelect[i].razaoSocialCompanhia;
+        
+          const vetorNivel3 = [];
+          while (i<tabAdminSelect.length && 
+                (campo1 === tabAdminSelect[i].nomeCargo &&
+                 campo2 === tabAdminSelect[i].nomeOrgao &&
+                 campo3 === tabAdminSelect[i].razaoSocialCompanhia)) {
+            const campo4 = tabAdminSelect[i].nomeGrupoEconomico;
+    
+            const vetorNivel4 = [];
+            while (i<tabAdminSelect.length && 
+                  (campo1 === tabAdminSelect[i].nomeCargo            &&
+                   campo2 === tabAdminSelect[i].nomeOrgao            &&
+                   campo3 === tabAdminSelect[i].razaoSocialCompanhia && 
+                   campo4 === tabAdminSelect[i].nomeGrupoEconomico)) {
+              const campo5 = tabAdminSelect[i].nomeAdministrador;
+              
+              const vetorNivel5 = [];
+              while (i<tabAdminSelect.length && 
+                    (campo1 === tabAdminSelect[i].nomeCargo            &&
+                     campo2 === tabAdminSelect[i].nomeOrgao            &&
+                     campo3 === tabAdminSelect[i].razaoSocialCompanhia && 
+                     campo4 === tabAdminSelect[i].nomeGrupoEconomico   &&
+                     campo5 === tabAdminSelect[i].nomeAdministrador)) {
+               vetorNivel5.push({
+                  campoExibicao6: 'De ' + tabAdminSelect[i].dtInicioFormatted + ' a ' + tabAdminSelect[i].dtFimFormatted,
+                });
+                i++;
+              }
+              
+              vetorNivel4.push({
+                campoExibicao5: campo5,
+                exibeExibicao5: true,
+                vetorExibicao5: vetorNivel5,
+              });
+            }
+            
+            vetorNivel3.push({
+              campoExibicao4: 'Grupo ' + campo4,
+              exibeExibicao4: true,
+              vetorExibicao4: vetorNivel4,
+            });
+          }
+          
+          vetorNivel2.push({
+            campoExibicao3: campo3,
+            exibeExibicao3: true,
+            vetorExibicao3: vetorNivel3,
+          });
+        }
+        
+        vetorNivel1.push({
+          campoExibicao2: campo2,
           exibeExibicao2: true,
           vetorExibicao2: vetorNivel2,
         });
@@ -694,7 +1037,7 @@ function Teste() {
       })
     );
   }
-  
+
   return(
     <div className='containerHomeTeste'>
       {loading ? (
@@ -770,18 +1113,10 @@ function Teste() {
                     >
                       Novo Registro
                     </button>
-                    <button 
-                      className='botaoNovoAdministradorTeste'
-                      onClick={() => setChamaTeste(!chamaTeste)}
-                    >
-                      Teste
-                    </button>
                   </>)
                   }
                 </div>
-                {/*
-                MANTER COMENTADO ATÉ LIBERAR ORDENAÇÃO E FILTRO
-                <div className='headerBoxesTeste'>
+                {<div className='headerBoxesTeste'>
                   <div className='OrdenAdministradoresTeste'>
                     <small>Ordenação</small>
                     <select
@@ -789,8 +1124,8 @@ function Teste() {
                       id='selOrdenAdministrador'
                       value={ordenacao}
                       onChange={(e) => {
-                        //scrollPositionRef.current = 0;
-                        //setOrdenacao(e.target.value)
+                        scrollPositionRef.current = 0;
+                        setOrdenacao(e.target.value)
                       }}
                     >
                       <option key='ordAdmin'     value='administrador'>Administrador</option>
@@ -803,7 +1138,8 @@ function Teste() {
                       <div className='botAscOrdenAdministradorTeste'>
                         <button onClick={() => {
                             //scrollPositionRef.current = 0;
-                            //setOrdenacaoAsc(true)
+                            scrollPositionRef.current = document.getElementById("containerDadosAdministradores").scrollTop;
+                            setOrdenacaoAsc(true)
                           }}>
                           <SortAscButtonIcon/>
                         </button>
@@ -811,7 +1147,8 @@ function Teste() {
                       <div className='botAscOrdenAdministradorTeste'>
                         <button onClick={() => {
                             //scrollPositionRef.current = 0;
-                            //setOrdenacaoAsc(false)
+                            scrollPositionRef.current = document.getElementById("containerDadosAdministradores").scrollTop;
+                            setOrdenacaoAsc(false)
                           }}>
                           <SortDescButtonIcon/>
                         </button>
@@ -826,12 +1163,12 @@ function Teste() {
                       value={filtro}
                       onChange={(e) => setFiltro(e.target.value)}
                     >
-                      <option key='filtVazio'     value=''             >Selecione um filtro</option>
-                      <option key='filtAdmin'     value='administrador'>Administrador</option>
-                      <option key='filtGrupo'     value='grupo'        >Grupo Econômico</option>
-                      <option key='filtCompanhia' value='companhia'    >Companhia</option>
-                      <option key='filtOrgao'     value='orgao'        >Órgão da Administração</option>
-                      <option key='filtCargo'     value='cargo'        >Cargo</option>
+                      <option key='filt1Vazio'     value=''             >Selecione um filtro</option>
+                      <option key='filt1Admin'     value='administrador'>Administrador</option>
+                      <option key='filt1Grupo'     value='grupo'        >Grupo Econômico</option>
+                      <option key='filt1Companhia' value='companhia'    >Companhia</option>
+                      <option key='filt1Orgao'     value='orgao'        >Órgão da Administração</option>
+                      <option key='filt1Cargo'     value='cargo'        >Cargo</option>
                     </select>
                     <div className='selFiltroAdministradorTeste'>
                       <select
@@ -840,7 +1177,7 @@ function Teste() {
                         value={itemFiltro}
                         onChange={(e) => setItemFiltro(e.target.value)}
                       >
-                        <option key='filtVazio'   value=''>
+                        <option key='filt2Vazio'   value=''>
                           {(filtro === '' ? 'Selecione um filtro acima' : 'Selecione um item a filtrar')}
                         </option>
                         {conteudoFiltro.map((item, index) => {
@@ -852,7 +1189,7 @@ function Teste() {
                       <button onClick={cancelaFiltroTabela}>Cancelar</button>
                     </div>
                   </div>
-                      </div> */}
+                </div>}
               </div>
               <div 
                 className='containerDadosAdministradoresTeste'
