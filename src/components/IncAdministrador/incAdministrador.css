@@ -1,5 +1,4 @@
 .incAdministradorComponent {
-  width: 499px;
   margin: 5px;
   padding: 10px 0;
   border-top: 1px solid aliceblue;
@@ -68,4 +67,12 @@
   margin: 0;
   margin-bottom: 8px;
   padding: 3px;
+}
+
+@media screen and (max-width:650px) {
+  .incInputAdministrador {
+    margin-bottom: 4px;
+    padding: 3px 3px;
+    width: 200px;
+  }
 }

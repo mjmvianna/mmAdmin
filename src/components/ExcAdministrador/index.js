@@ -1,26 +1,89 @@
 import './excAdministrador.css';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
-import { collection, doc, deleteDoc } from 'firebase/firestore';
+import { collection, doc, getDoc, deleteDoc } from 'firebase/firestore';
 
 import { db } from '../../services/firebaseConnection';
+import { fetchPessoas } from '../../utils/utilsDb';
+import { fetchCompanhias } from '../../utils/utilsDb';
+import { fetchOrgaos } from '../../utils/utilsDb';
+import { fetchCargos } from '../../utils/utilsDb';
 
 function ExcAdministrador({ excUidAdministrador,
-                            excNomeAdministrador,
-                            excRazaoSocial,
-                            excNomeOrgao,
-                            excNomeCargo,
-                            excDtInicioMandato,
-                            excDtFimMandato,
                             setSelectedAdministrador,
                             setExibeExcluir }) {
   const collectionAdministradores = collection(db, 'administradores');
   
   const [excluindo, setExcluindo] = useState(false);
-  const [dtInicioMandato   , setDtInicioMandato   ] = useState(excDtInicioMandato ? excDtInicioMandato.toISOString().split('T')[0] : '');
-  const [dtFimMandato      , setDtFimMandato      ] = useState(excDtFimMandato    ? excDtFimMandato.toISOString().split('T')[0]    : '');
   
+  const [excNomeAdministrador, setExcNomeAdministrador] = useState('');
+  const [excRazaoSocial      , setExcRazaoSocial      ] = useState('');
+  const [excNomeOrgao        , setExcNomeOrgao        ] = useState('');
+  const [excNomeCargo        , setExcNomeCargo        ] = useState('');
+  const [excDtInicioMandato  , setExcDtInicioMandato  ] = useState('');
+  const [excDtFimMandato     , setExcDtFimMandato     ] = useState('');
+  const [dtInicioMandato     , setDtInicioMandato     ] = useState('');
+  const [dtFimMandato        , setDtFimMandato        ] = useState('');
+  
+  useEffect(() => {
+    async function fetchTabelas() {
+      try {
+        const docSnapshot = await getDoc(doc(collectionAdministradores, excUidAdministrador));
+        if (docSnapshot.exists()) {
+          const listaPessoas = await fetchPessoas();
+          const uidPessoa = docSnapshot.data().uidPessoa;
+          const indPessoa = listaPessoas.findIndex((element) => element.uidPessoa === uidPessoa);
+          if (indPessoa !== -1) {
+            setExcNomeAdministrador(listaPessoas[indPessoa].nomePessoa);
+          } else {
+            setExcNomeAdministrador('* Erro *');
+          }
+          
+          const listaCompanhias = await fetchCompanhias();
+          const uidCompanhia = docSnapshot.data().uidCompanhia;
+          const indCompanhia = listaCompanhias.findIndex((element) => element.uidCompanhia === uidCompanhia);
+          if (indCompanhia !== -1) {
+            setExcRazaoSocial(listaCompanhias[indCompanhia].razaoSocial);
+          } else {
+            setExcRazaoSocial('* Erro *');
+          }
+          
+          const listaOrgaos = await fetchOrgaos();
+          const uidOrgao = docSnapshot.data().uidOrgao;
+          const indOrgao = listaOrgaos.findIndex((element) => element.uidOrgao === uidOrgao);
+          if (indOrgao !== -1) {
+            setExcNomeOrgao(listaOrgaos[indOrgao].nomeOrgao);
+          } else {
+            setExcNomeOrgao('* Erro *');
+          }
+          
+          const listaCargos = await fetchCargos();
+          const uidCargo = docSnapshot.data().uidCargo;
+          const indCargo = listaCargos.findIndex((element) => element.uidCargo === uidCargo);
+          if (indCargo !== -1) {
+            setExcNomeCargo(listaCargos[indCargo].nomeCargo);
+          } else {
+            setExcNomeCargo('* Erro *');
+          }
+          
+          const excDtInicioMandato = docSnapshot.data().dtInicioMandato;
+          setDtInicioMandato(excDtInicioMandato.toDate().toISOString().split('T')[0]);
+          
+          const excDtFimMandato = docSnapshot.data().dtFimMandato;
+          if (excDtFimMandato) {
+            setDtFimMandato(excDtFimMandato.toDate().toISOString().split('T')[0]);
+          } else {
+            setDtFimMandato('');
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching tabelas:', error);
+      };
+    }
+    fetchTabelas();
+  }, []);
+
   async function handleConfirm(e) {
     e.preventDefault();
     

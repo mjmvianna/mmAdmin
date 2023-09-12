@@ -61,7 +61,6 @@ function Pessoas() {
         lista.push({
           uidPessoa    : doc.id,
           nomePessoa   : doc.data().nomePessoa,
-          apelidoPessoa: doc.data().apelidoPessoa,
           nomeIndice   : doc.data().nomePessoa.toUpperCase(),
         });
       });
@@ -73,28 +72,22 @@ function Pessoas() {
     setLoading(false);
   }
   
-  async function handleIncluiPessoa(nomePessoa, apelidoPessoa) {
+  async function handleIncluiPessoa(nomePessoa) {
     const indNomePessoa = tabPessoas.findIndex((element) => element.nomePessoa.toUpperCase() === nomePessoa.toUpperCase());
     if (indNomePessoa === -1) {
-      const indApelidoPessoa = tabPessoas.findIndex((element) => element.apelidoPessoa.toUpperCase() === apelidoPessoa.toUpperCase());
-      if (indApelidoPessoa === -1) {
-        try {
-          incluiPessoa(nomePessoa, apelidoPessoa);
-        } catch(error) {
-          console.log(`Ocorreu um erro ${error}`);
-        }
-      } else {
-        toast.error('Apelido já cadastrado');
+      try {
+        incluiPessoa(nomePessoa);
+      } catch(error) {
+        console.log(`Ocorreu um erro ${error}`);
       }
     } else {
       toast.error('Nome já cadastrado');
     }
   }
   
-  async function incluiPessoa(nomePessoa, apelidoPessoa) {
+  async function incluiPessoa(nomePessoa) {
     await addDoc(collectionPessoas, {
       nomePessoa   : nomePessoa,
-      apelidoPessoa: apelidoPessoa,
     })
     .then ( () => {
       toast.success('Pessoa incluída com sucesso');
@@ -105,33 +98,27 @@ function Pessoas() {
     setExibeIncluir(false);
   }
   
-  async function handleAlteraPessoa(uidPessoa, nomePessoa, apelidoPessoa) {
+  async function handleAlteraPessoa(uidPessoa, nomePessoa) {
     const indNomePessoa = tabPessoas.findIndex((element) => element.nomePessoa.toUpperCase() === nomePessoa.toUpperCase());
     if (indNomePessoa === -1 || tabPessoas[indNomePessoa].uidPessoa === uidPessoa) {
-      const indApelidoPessoa = tabPessoas.findIndex((element) => element.apelidoPessoa.toUpperCase() === apelidoPessoa.toUpperCase());
-      if (indApelidoPessoa === -1 || tabPessoas[indApelidoPessoa].uidPessoa === uidPessoa) {
-        try {
-          await getDoc(doc(collectionPessoas, uidPessoa))
-          .then ((docSnapshot) => {
-            if (docSnapshot.exists()) {
-              alteraPessoa(uidPessoa, nomePessoa, apelidoPessoa);
-            }
-          });
-        } catch(error) {
-          console.log(`Ocorreu um erro ${error}`);
-        }
-      } else {
-        toast.error('Apelido já cadastrado');
+      try {
+        await getDoc(doc(collectionPessoas, uidPessoa))
+        .then ((docSnapshot) => {
+          if (docSnapshot.exists()) {
+            alteraPessoa(uidPessoa, nomePessoa);
+          }
+        });
+      } catch(error) {
+        console.log(`Ocorreu um erro ${error}`);
       }
     } else {
       toast.error('Nome já cadastrado');
     }
   }
   
-  async function alteraPessoa(uidPessoa, nomePessoa, apelidoPessoa) {
+  async function alteraPessoa(uidPessoa, nomePessoa) {
     await setDoc(doc(collectionPessoas, uidPessoa), {
       nomePessoa   : nomePessoa,
-      apelidoPessoa: apelidoPessoa,
     })
     .then ( () => {
       toast.success('Pessoa alterada com sucesso');
@@ -165,13 +152,10 @@ function Pessoas() {
       let indice = '';
       if ( ind === 'nome') {
         indice = pessoa.nomePessoa;
-      } else {
-        indice = pessoa.apelidoPessoa;
       }
       lista.push({
         uidPessoa    : pessoa.uidPessoa,
         nomePessoa   : pessoa.nomePessoa,
-        apelidoPessoa: pessoa.apelidoPessoa,
         sortIndex: indice.toUpperCase(),
       });
     });
@@ -188,13 +172,10 @@ function Pessoas() {
       let indice = '';
       if ( ind === 'nome') {
         indice = pessoa.nomePessoa;
-      } else {
-        indice = pessoa.apelidoPessoa;
       }
       lista.push({
         uidPessoa    : pessoa.uidPessoa,
         nomePessoa   : pessoa.nomePessoa,
-        apelidoPessoa: pessoa.apelidoPessoa,
         sortIndex: indice.toUpperCase(),
       });
     });
@@ -255,7 +236,6 @@ function Pessoas() {
                     <AltPessoa
                       altUidPessoa      ={selectedPessoa.uidPessoa}
                       altNomePessoa     ={selectedPessoa.nomePessoa}
-                      altApelidoPessoa  ={selectedPessoa.apelidoPessoa}
                       handleAlteraPessoa={handleAlteraPessoa}
                       setSelectedPessoa ={setSelectedPessoa}
                       setExibeAlterar   ={setExibeAlterar}
@@ -268,7 +248,6 @@ function Pessoas() {
                     <ExcPessoa
                       excUidPessoa      ={selectedPessoa.uidPessoa}
                       excNomePessoa     ={selectedPessoa.nomePessoa}
-                      excApelidoPessoa  ={selectedPessoa.apelidoPessoa}
                       handleExcluiPessoa={handleExcluiPessoa}
                       setSelectedPessoa ={setSelectedPessoa}
                       setExibeExcluir   ={setExibeExcluir}
@@ -302,15 +281,6 @@ function Pessoas() {
                               </div>
                             </div>
                           </th>
-                          <th scope='col'>
-                            <div className='headerTabPessoas'>
-                              <span>Apelido</span>
-                              <div className='headerTabPessoasButtons'>
-                                <button onClick={() => ascOrderPessoas ('apelido')}><SortAscButtonIcon/></button>
-                                <button onClick={() => descOrderPessoas('apelido')}><SortDescButtonIcon/></button>
-                              </div>
-                            </div>
-                          </th>
                           {userMaster && (<th scope='col'>#</th>)}
                         </tr>
                       </thead>
@@ -320,9 +290,6 @@ function Pessoas() {
                             <tr key={item.uidPessoa}>
                               <td className='tdNomePessoa' data-label='Nome:'>
                                 {item.nomePessoa}
-                              </td>
-                              <td className='tdApelidoPessoa' data-label='Apelido:'>
-                                {item.apelidoPessoa}
                               </td>
                               {userMaster && (
                                 <td className='tdBotoesPessoas'>

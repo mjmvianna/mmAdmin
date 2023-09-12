@@ -7,7 +7,6 @@ import { toast } from 'react-toastify';
 function ExcPessoa({ 
             excUidPessoa,
             excNomePessoa,
-            excApelidoPessoa,
             handleExcluiPessoa,
             setSelectedPessoa,
             setExibeExcluir }) {
@@ -49,20 +48,6 @@ function ExcPessoa({
                 type='text' 
                 placeholder='Nome'
                 value={excNomePessoa}
-                readOnly
-              ></input>
-            </td>
-          </tr>
-          <tr>
-            <td>Apelido: </td>
-            <td>
-              <input 
-                className='excInputPessoa'
-                id='apelidoPessoa'
-                name='apelidoPessoa'
-                type='text' 
-                placeholder='Apelido'
-                value={excApelidoPessoa}
                 readOnly
               ></input>
             </td>

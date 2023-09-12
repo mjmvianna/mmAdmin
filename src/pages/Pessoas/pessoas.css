@@ -42,14 +42,14 @@
 }
 
 .containerTabelaPessoas {
+  background-color: lightgrey;
   max-height:100%;
   width:90%;
-  max-width: 750px;
+  max-width: 550px;
   position: relative;
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  background-color: lightgrey;
   color:#1c1c1c;
   font-size: 14px;
   overflow-y: auto;
@@ -100,10 +100,6 @@
 
 .tabelaPessoas td.tdNomePessoa{
   width: 400px;
-}
-
-.tabelaPessoas td.tdApelidoPessoa{
-  width: 230px;
 }
 
 .botaoAcaoPessoa {
@@ -169,10 +165,6 @@
   
   .tabelaPessoas td.tdNomePessoa{
     border-top: 1px solid black;
-    width: 100%;
-  }
-  
-  .tabelaPessoas td.tdApelidoPessoa{
     width: 100%;
   }
   

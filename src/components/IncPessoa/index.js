@@ -4,13 +4,12 @@ import { toast } from 'react-toastify';
 
 function IncPessoa({ handleIncluiPessoa, setSelectedPessoa, setExibeIncluir }) {
   const [nomePessoa   , setNomePessoa   ] = useState('');
-  const [apelidoPessoa, setApelidoPessoa] = useState('');
   const [incluindo    , setincluindo    ] = useState(false);
   
   const handleConfirm = () => {
-    if (nomePessoa !== '' && apelidoPessoa !== '') {
+    if (nomePessoa !== '') {
       setincluindo(true);
-      handleIncluiPessoa(nomePessoa, apelidoPessoa);
+      handleIncluiPessoa(nomePessoa);
       setincluindo(false);
     } else {
       toast.error('Preencha todos os campos');
@@ -39,21 +38,6 @@ function IncPessoa({ handleIncluiPessoa, setSelectedPessoa, setExibeIncluir }) {
                 placeholder='Nome'
                 value={nomePessoa}
                 onChange={ (e) => setNomePessoa(e.target.value) }
-              ></input>
-            </td>
-          </tr>
-          <tr>
-            <td>Apelido: </td>
-            <td>
-              <input 
-                className='incInputPessoa'
-                id='apelidoPessoa'
-                name='apelidoPessoa'
-                type='text' 
-                required
-                placeholder='Apelido'
-                value={apelidoPessoa}
-                onChange={ (e) => setApelidoPessoa(e.target.value)}
               ></input>
             </td>
           </tr>

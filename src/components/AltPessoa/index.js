@@ -5,22 +5,19 @@ import { toast } from 'react-toastify';
 function AltPessoa({ 
             altUidPessoa,
             altNomePessoa,
-            altApelidoPessoa,
             handleAlteraPessoa,
             setSelectedPessoa,
             setExibeAlterar}) {
   const [nomePessoa   , setNomePessoa   ] = useState(altNomePessoa);
-  const [apelidoPessoa, setApelidoPessoa] = useState(altApelidoPessoa);
   const [alterando    , setAlterando    ] = useState(false);
   
   function handleConfirm() {
-    if (nomePessoa !== '' && apelidoPessoa !== '') {
-      if (nomePessoa    === altNomePessoa &&
-          apelidoPessoa === altApelidoPessoa) {
+    if (nomePessoa !== '') {
+      if (nomePessoa    === altNomePessoa) {
         handleCancel();
       } else {
         setAlterando(true);
-        handleAlteraPessoa(altUidPessoa, nomePessoa, apelidoPessoa);
+        handleAlteraPessoa(altUidPessoa, nomePessoa);
         setAlterando(false);
       }
     } else {
@@ -50,21 +47,6 @@ function AltPessoa({
                 placeholder='Nome'
                 value={nomePessoa}
                 onChange={ (e) => setNomePessoa(e.target.value) }
-              ></input>
-            </td>
-          </tr>
-          <tr>
-            <td>Apelido: </td>
-            <td>
-              <input 
-                className='altInputPessoa'
-                id='apelidoPessoa'
-                name='apelidoPessoa'
-                type='text' 
-                required
-                placeholder='Apelido'
-                value={apelidoPessoa}
-                onChange={ (e) => setApelidoPessoa(e.target.value)}
               ></input>
             </td>
           </tr>

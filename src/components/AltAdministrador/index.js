@@ -12,25 +12,26 @@ import { fetchOrgaos } from '../../utils/utilsDb';
 import { fetchCargos } from '../../utils/utilsDb';
 
 function AltAdministrador({ altUidAdministrador,
-                            altUidPessoa,
-                            altUidCompanhia,
-                            altUidOrgao,
-                            altUidCargo,
-                            altDtInicioMandato,
-                            altDtFimMandato,
                             setSelectedAdministrador,
                             setExibeAlterar }) {
   const collectionAdministradores = collection(db, 'administradores');
   
   const [alterando         , setAlterando         ] = useState(false);
-  const [uidPessoa         , setUidPessoa         ] = useState(altUidPessoa);
-  const [uidCompanhia      , setUidCompanhia      ] = useState(altUidCompanhia);
-  const [uidOrgao          , setUidOrgao          ] = useState(altUidOrgao);
-  const [uidCargo          , setUidCargo          ] = useState(altUidCargo);
-  const [dtInicioMandato   , setDtInicioMandato   ] = useState(altDtInicioMandato ? altDtInicioMandato.toISOString().split('T')[0] : '');
-  const [dtFimMandato      , setDtFimMandato      ] = useState(altDtFimMandato    ? altDtFimMandato.toISOString().split('T')[0]    : '');
+  const [altUidPessoa      , setAltUidPessoa      ] = useState('');
+  const [altUidCompanhia   , setAltUidCompanhia   ] = useState('');
+  const [altUidOrgao       , setAltUidOrgao       ] = useState('');
+  const [altUidCargo       , setAltUidCargo       ] = useState('');
+  const [altDtInicioMandato, setAltDtInicioMandato] = useState('');
+  const [altDtFimMandato   , setAltDtFimMandato   ] = useState('');
+  const [uidPessoa         , setUidPessoa         ] = useState('');
+  const [uidCompanhia      , setUidCompanhia      ] = useState('');
+  const [uidOrgao          , setUidOrgao          ] = useState('');
+  const [uidCargo          , setUidCargo          ] = useState('');
+  const [dtInicioMandato   , setDtInicioMandato   ] = useState('');
+  const [dtFimMandato      , setDtFimMandato      ] = useState('');
   
   const [loadingTabelas, setLoadingTabelas] = useState(true);
+  const [loadingAdmin  , setLoadingAdmin  ] = useState(true);
   const [tabPessoas    , setTabPessoas    ] = useState([]);
   const [tabCompanhias , setTabCompanhias ] = useState([]);
   const [tabOrgaos     , setTabOrgaos     ] = useState([]);
@@ -39,6 +40,23 @@ function AltAdministrador({ altUidAdministrador,
   useEffect(() => {
     async function fetchTabelas() {
       try {
+        const docSnapshot = await getDoc(doc(collectionAdministradores, altUidAdministrador));
+        if (docSnapshot.exists()) {
+          setAltUidPessoa      (docSnapshot.data().uidPessoa);
+          setAltUidCompanhia   (docSnapshot.data().uidCompanhia);
+          setAltUidOrgao       (docSnapshot.data().uidOrgao);
+          setAltUidCargo       (docSnapshot.data().uidCargo);
+          const dtInicioMandato = docSnapshot.data().dtInicioMandato;
+          setAltDtInicioMandato(dtInicioMandato.toDate());
+          const dtFimMandato    = docSnapshot.data().dtFimMandato;
+          if (dtFimMandato) {
+            setAltDtFimMandato   (dtFimMandato.toDate());
+          } else {
+            setAltDtFimMandato   ('');
+          }
+          setLoadingAdmin(false);
+        }
+      
         const listaPessoas = await fetchPessoas();
         setTabPessoas(listaPessoas);
         
@@ -62,6 +80,15 @@ function AltAdministrador({ altUidAdministrador,
     
   }, []);
   
+  useEffect(() => {
+    setUidPessoa      (altUidPessoa);
+    setUidCompanhia   (altUidCompanhia);
+    setUidOrgao       (altUidOrgao);
+    setUidCargo       (altUidCargo);
+    setDtInicioMandato(altDtInicioMandato!=='' ? altDtInicioMandato.toISOString().split('T')[0]: '');
+    setDtFimMandato   (altDtFimMandato   !=='' ? altDtFimMandato.toISOString().split('T')[0]   : '');
+  }, [loadingAdmin]);
+
   async function handleConfirm(e) {
     e.preventDefault();
     
@@ -98,10 +125,10 @@ function AltAdministrador({ altUidAdministrador,
         } catch(error) {
           console.error(`Ocorreu um erro ${error}`);
         }
-
+        
         setSelectedAdministrador(null);
         setExibeAlterar(false);
-
+        
       } else {
         toast.error('Fim do Mandato não pode ser antes do Início');
       }
